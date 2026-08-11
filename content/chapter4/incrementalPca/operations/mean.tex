@@ -1,0 +1,25 @@
+\subsection{Mean computation and centering}
+Before applying principal component analysis, the vectors must be centered by subtracting the mean. In the online scenarios, computing the mean raises the challenge as new observations $k + 1$ continuously arrive, older observations become  irrelevant. The algorithm must therefore be capable to efficiently updating the mean as the sliding window advances.
+Given a sliding window buffer of fixed capacity $W$, the running mean vector $\mu_t \in R^d$ across the $d$ embedding dimensions at iteration $t$ is calculated over the $N$ currently valid embedded vectors ($N \le W - (d - 1)\tau$):
+\begin{equation}
+    \boldsymbol{\mu}_t = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_i
+    \label{eq:tde_mean}
+\end{equation}
+When new scalar stream samples $x_{new}$ arrive, a new embedded vector is formed at the window tail. 
+Once the window is initially full, the oldest embedded vector $x_{old}$ is discarded, allowing the running mean to update incrementally in $O(d)$ time:
+\begin{equation}
+\mu_{t+1} = \mu_t + \frac{x_{new} - x_{old}}{N}
+\label{eq:mean_update}
+\end{equation}
+Once the running mean which is an pointer that can be assessed across functions the tde vector is centered 
+\begin{equation}
+\tilde{\mathbf{z}}_t = \mathbf{z}_t - \boldsymbol{\mu} = 
+\begin{bmatrix}
+z_{t,1} - \mu \\
+z_{t,2} - \mu \\
+\vdots \\
+z_{t,d} - \mu
+\end{bmatrix}
+\label{eq:centering_vector}
+\end{equation}
+Data centering translates the coordinate system origin to the sample mean vector $\mu_t$. This ensures that the resulting covariance matrix accurately captures variance relative to the centroid, rather than second-moment distortions introduced by a non-zero mean offset.

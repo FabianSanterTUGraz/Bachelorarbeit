@@ -1,0 +1,19 @@
+\subsection{Eigendecomposition}
+Following the update of the running covariance matrix $Cov_{running}$, the eigenvalues and eigenvectors have to be identified. This is achieved by identifying the scalar roots $\lambda$ and the non-zero orthogonal directions (eigenvalues) that satisfy the linear system. \\
+As already discussed in section \ref{section:fondation} the eigensystem relationship is defined by:
+\begin{equation}
+Cu = \lambda u
+\label{eq:centering_vector}
+\end{equation}
+And can be rewritten as: 
+\begin{equation}
+    (Cov_{running}-\lambda I)v = 0
+\end{equation}
+Due to the fact that statistical covariance matrices are inherently symmetric due to their construction via row-by-column outer products of incoming time-delay embedded vectors. 
+the classical symmetric Jacobi transformation is highly appropriate. The Jacobi method provides a numerically foolproof and robust solution framework for all real symmetric systems (\cite{explanationJacobi}).
+The jacobi method can use the eigenvectors wich where previously calculated. Because the cov matrix only changes a bit each iteration the solver will also converge really fast. 
+The classical symmetric Jacobi transformation is highly appropriate. The Jacobi method provides a numerically foolproof and robust solution framework for all real symmetric systems \cite{explanationJacobi}. 
+While alternative matrix factorization approaches, such as the QR algorithm, are traditionally preferred for dense higher-order matrices (typically where the dimension $d > 10$), they are less suited for the incremental architecture developed in this work \cite{explanationJacobi}. The QR approach operates as a static, non-reusable decomposition sequence. 
+Because the sliding window mechanism updates only a single incoming and outgoing vector per iteration, the underlying covariance structure changes continuously but minimally.
+Exploiting this allows the Jacobi algorithm to converge only after a few iterations.
+\input{content/chapter4/incrementalPca/operations/jacobiTransformation}

@@ -1,0 +1,31 @@
+\subsection{Sampling Interval ($\Delta$t)}
+Consistent sampling intervals are important factors in time series data. Large time jumps between consecutive individual measurements can introduce artificial irregularities. Therefore the dataset was validated by calculating the time differences between consecutive timestamps. 
+The interval $\Delta t$ was calculated as : \\
+\begin{center}
+$\Delta t_n = t_n - t_{n-1}$ \\
+\end{center}   
+Where $\Delta t_n$ is the time  difference between the current  and previous measurement. 
+With Python's NumPy min and max functions, the minimum and maximum $\Delta t$ were computed for each dataset. The complete evaluation results are detailed in \ref{app:appendix2}. Inspection identified anomalies characterized by unexpected negative or excessively large values. After excluding these specific files  
+(\ref{app:dataset_description}: 5, 13, 14, and 16) and re-running the algorithm, the resulting statistical values improved significantly, as show in \ref{table:statistics}.\\
+\begin{table}[!h]
+ \centering
+ \begin{tabular}{|c|c|}
+ \hline
+ Total number of intervals & 2,975,473 \\ 
+ \hline
+ Mean $\Delta t$ & 1,906.94 $\mu$s \\ 
+ \hline
+ Standard deviation & 38.03 $\mu$s \\ 
+ \hline
+ Median & 1,912.0 $\mu$s \\
+ \hline
+ Minimum & 1,660.0 $\mu$s \\
+ \hline
+ Maximum & 2,032.0 $\mu$s \\
+ \hline
+ \end{tabular}
+ \caption{Statistics of sampling intervals after filtering rounded to the second decimal}
+ \label{table:statistics}
+\end{table}
+\\
+By analyzing the results, a clear improvement can be observed. The difference between the minimum, maximum, and the global mean is very small. Additionally, the standard deviation is very small, which indicates highly consistent sampling. These results imply that the dataset is now clean and can be further used for benchmarking and testing.

@@ -1,0 +1,3 @@
+\section{{Problem to solve}}
+Plotting time series data which contains noise introduces the issue that when the amount of noise is increased the identification of anomalies in the time series becomes harder.
+Existing implementations use Principal Component Analysis in the combination with Time Delay Embedding for offline analysis. The main issue is that they can't process streaming data in real time due to the computational overhead of recalculating the PCA in each iteration. The main task is to identify performance bottlenecks and expand the current implementation with optimization techniques like sliding windows.

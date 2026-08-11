@@ -1,0 +1,18 @@
+\subsection{Time delay embedding}
+It is the technique for reconstructing the underlying dynamics of the time series by transforming a signal into a higher order dimensional state space representation. The TDE is a vector defined as: 
+\begin{equation}
+\mathbf{z}_t = \begin{bmatrix}
+x_t \\
+x_{t-\tau} \\
+x_{t-2\tau} \\
+\vdots \\
+x_{t-(d-1)\tau}
+\end{bmatrix} 
+\label{eq:tde_definition}
+\end{equation}
+In a sliding window implantation of length $W$(the buffer window size),the time-delay embedding vector $x_t \in R^d$ of dimension $d$ is extracted from the last element of the current window. Because the index offsets defining each embedding dimensions remain constant across iterations, they can be pre-calculated during initialization according to:
+\begin{equation}
+\text{index}_i = (W - 1) - i \cdot \tau, \quad i = 0, 1, \ldots, d-1
+\label{eq:tde_indices}
+\end{equation}
+The values from the sliding window into the time delay embedding vector get mapped with this $index_i$ mapping. 

@@ -1,0 +1,158 @@
+--- 01 - m1_half_shaft_speed_no_mechanical_load.csv ---
+file min delta: 1776.0
+file max delta: 1932.0
+file mean delta: 1874.92
+
+--- 02 - m1_load_0.5Nm_half_speed.csv ---
+file min delta: 1812.0
+file max delta: 1936.0
+file mean delta: 1893.57
+
+--- 03 - m1_mechanically_imbalanced_half_speed.csv ---
+file min delta: 1676.0
+file max delta: 1932.0
+file mean delta: 1878.29
+
+--- 04 - m1_mechanically_imbalanced_half_speed.csv ---
+file min delta: 1716.0
+file max delta: 1960.0
+file mean delta: 1868.71
+
+--- 05 - m1_mechanically_imbalanced_load_0.5Nm_half_speed.csv ---
+file min delta: -284882908.0
+file max delta: 284886704.0
+file mean delta: 1854.61
+
+--- 06 - m1_electrically_50_ohm_fault_half_speed.csv ---
+file min delta: 1808.0
+file max delta: 1936.0
+file mean delta: 1897.29
+
+--- 07 - m1_electrically_100_ohm_fault_half_speed.csv ---
+file min delta: 1824.0
+file max delta: 1972.0
+file mean delta: 1936.61
+
+--- 08 - m1_electrically_150_ohm_fault_half_speed.csv ---
+file min delta: 1804.0
+file max delta: 1940.0
+file mean delta: 1896.93
+
+--- 09 - m1_electrically_50_ohm_fault_load_0.5Nm_half_speed.csv ---
+file min delta: 1832.0
+file max delta: 1972.0
+file mean delta: 1935.10
+
+--- 10 - m1_electrically_100_ohm_fault_load_0.5Nm_half_speed.csv ---
+file min delta: 1824.0
+file max delta: 1972.0
+file mean delta: 1938.98
+
+--- 11 - m1_mechanically_imbalanced_electrically_50_ohm_fault_half_speed.csv ---
+file min delta: 1704.0
+file max delta: 1940.0
+file mean delta: 1890.92
+
+--- 12 - m1_mechanically_imbalanced_electrically_100_ohm_fault_half_speed.csv ---
+file min delta: 1848.0
+file max delta: 1968.0
+file mean delta: 1938.70
+
+--- 13 - m1_mechanically_imbalanced_electrically_150_ohm_fault_half_speed.csv ---
+file min delta: 1856.0
+file max delta: 19428.0
+file mean delta: 1939.94
+
+--- 14 - m1_mechanically_imbalanced_electrically_50_ohm_fault_load_0.5Nm_half_speed.csv ---
+file min delta: 1828.0
+file max delta: 359601908.0
+file mean delta: 4294.26
+
+--- 15 - m1_with_m2_mechanicaly_umbalanced_on_background_half_speed.csv ---
+file min delta: 1804.0
+file max delta: 1932.0
+file mean delta: 1892.75
+
+--- 16 - m1_mechanically_imbalanced_with_m2_normal_on_background_half_speed.csv ---
+file min delta: 1748.0
+file max delta: 83726856.0
+file mean delta: 2362.00
+
+--- 17 - m1_mechanically_imbalanced_with_m2_mechanicaly_imbalanced_on_background_half_speed.csv ---
+file min delta: 1660.0
+file max delta: 2032.0
+file mean delta: 1825.66
+
+--- 18 - m1_load_0.5Nm_m2_mechanically_imbalanced_on_background_half_speed.csv ---
+file min delta: 1800.0
+file max delta: 1932.0
+file mean delta: 1893.42
+
+--- 19 - m1_mechanically_imbalanced_load_0.5Nm_m2_mechanically_imbalanced_on_background_half_speed.csv ---
+file min delta: 1696.0
+file max delta: 1936.0
+file mean delta: 1884.80
+
+--- 20 - m1_electrically_50_ohm_fault_m2_imbalanced_on_background_half_speed.csv ---
+file min delta: 1836.0
+file max delta: 1972.0
+file mean delta: 1933.41
+
+--- 21 - m1_electrically_50_ohm_fault_load_0.5Nm_m2_mechanically_imbalanced_half_speed.csv ---
+file min delta: 1840.0
+file max delta: 1972.0
+file mean delta: 1935.88
+
+--- 22 - m1_electrically_100_ohm_fault_m2_mechanically_imbalanced_half_speed.csv ---
+file min delta: 1696.0
+file max delta: 1940.0
+file mean delta: 1877.48
+
+--- 23 - m1_electrically_100_ohm_fault_load_0.5Nm_m2_mechanically_imbalanced_half_speed.csv ---
+file min delta: 1844.0
+file max delta: 1972.0
+file mean delta: 1939.28
+
+--- 24 - m1_electrically_150_ohm_fault_m2_imbalanced_on_background_half_speed.csv ---
+file min delta: 1816.0
+file max delta: 1940.0
+file mean delta: 1900.52
+
+--- 25 - m1_mechanically_imbalanced_electrically_50_ohm_fault_m2_imbalanced_on_background_half_speed.csv ---
+file min delta: 1836.0
+file max delta: 1972.0
+file mean delta: 1939.04
+
+--- 26 - m1_mechanically_umbalanced_electrically_50_ohm_fault_load_0.5Nm_m2_umbalanced_on_background_half_speed.csv ---
+file min delta: 1828.0
+file max delta: 1968.0
+file mean delta: 1909.00
+
+--- 27 - m1_mechanically_imbalanced_electrically_100_ohm_fault_m2_imbalanced_on_background_half_speed.csv ---
+file min delta: 1852.0
+file max delta: 1968.0
+file mean delta: 1938.63
+
+--- 28 - m1_mechanically_imbalanced_electrically_100_ohm_fault_load_0.5Nm_m2_imbalanced_on_background_half_speed.csv ---
+file min delta: 1828.0
+file max delta: 1968.0
+file mean delta: 1938.81
+
+--- 29 - m1_mechanically_imbalanced_electrically_150_ohm_fault_m2_imbalanced_on_background_half_speed.csv ---
+file min delta: 1844.0
+file max delta: 1968.0
+file mean delta: 1939.41
+
+--- 30 - m1_mechanically_imbalanced_electrically_150_ohm_fault_m2_imbalanced_on_background_rotated_half_speed.csv ---
+file min delta: 1856.0
+file max delta: 1968.0
+file mean delta: 1939.33
+
+
+Total statistics:
+Number intervals: 3532133
+Mean delta-t: 2027.1174771731417
+Standard deviation: 290774.26422754396
+Median: 1908.0
+Minimum: -284882908.0
+Maximum: 359601908.0

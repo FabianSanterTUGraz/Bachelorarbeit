@@ -1,0 +1,27 @@
+\subsection{Computation}
+Prior to computing the covariance matrix, the dataset has to be centered. This step is a mandatory preprocessing step in PCA to ensure that the origin of the coordinate system matches with the sample mean $\boldsymbol{\mu}$. Without centering, the first principal component would reflect the shift of the dataset relative to the origin rather than displaying the directions of maximum variance. Here, the mean vector is defined by:
+\begin{equation}
+\boldsymbol{\mu} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_i
+\label{eq:mean_vector}
+\end{equation}
+Following this, the centered vector $\tilde{\mathbf{x}}_i$ for each data point is defined as:
+\begin{equation}
+\tilde{\mathbf{x}}_i = \mathbf{x}_i - \boldsymbol{\mu}
+\label{eq:centering_vector}
+\end{equation}
+
+Where $X$ is the current window mean. 
+The covariance matrix $S$is then computed as:
+\begin{equation}
+\mathbf{S} = \frac{1}{n-1} \tilde{\mathbf{X}}^T \tilde{\mathbf{X}}
+\end{equation}
+The resulting covariance matrix $C$ quantifies how each pair of embedded variables varies together. By performing an eigen-decomposition of the covariance matrix it yields its eigenvalues $\lambda_1 ,\lambda_2....\lambda_d$ and corresponding eigenvectors $\mathbf{u}_1, \mathbf{u}_2, \dots, \mathbf{u}_d$, where each one of the eigenvalues $\lambda$ represents the variance captured along its its associated principal component(\cite{rencher2002methods}, p.382).
+The resulting principal components scores represent the transformed data coordinates in the new orthogonal space are calculated by projecting the centered TDE data matrix $\tilde{X}$ onto the matrix of eigenvectors $\mathbf{U} = [\mathbf{u}_1, \mathbf{u}_2, \dots, \mathbf{u}_d]$:
+\begin{equation}
+\mathbf{Z} = \tilde{\mathbf{X}}\mathbf{U}
+\label{eq:pca_scores}
+\end{equation}
+Here, $\mathbf{Z} \in {R}^{N \times d}$ contains the projected principal component scores, where each column $i$ corresponds to the projection along the $i$-th eigenvector $\mathbf{u}_i$ where $\mathbf{U}$ denotes the matrix of extracted eigenvectors. For this specific area of application only the first two principal components $z_1$ and $z_2$ are kept. These components capture the most of the variance in the system while reducing the data from $d$ down to two dimensions, which can easily be plotted. Combining Time Delay Embedding (TDE) with Principal Component Analysis is especially effective in this use case because the TDE reconstructs the system dynamics in phase space, while PCA is able to identify the lower-dimensional projection that preserves maximum variance, thus making structural anomalies more visible. 
+Where A is the matrix of extracted eigenvectors.
+Only the first two principal components are retained these components explain the major variance in the data while reducing from d dimensions to two dimensions which can be easily be plotted.
+In this use case TDE in combination with PCA is especially effective because TDE reveals the underlying dynamics with which PCA finds its projection that preserves the maximum variance making anomalies more visible. 

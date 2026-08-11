@@ -1,0 +1,22 @@
+\subsection{Visual comparison}
+
+When comparing the plain plotting and fingerprint approach a clear improvement can be observed. While the raw vibration signal does indeed provide an accurate depiction of the machines behavior over time, the interpretation is difficult for an non expert human. 
+As shown in Figure~\ref{fig:BadExample}, the signal appears as a continuous wave in which patterns are not immediately visible. This causes that, extracting insights about the machine's condition requires further analysis or a high level of expertise.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/vibration_data.png}
+\caption{Example of the raw vibration signal.}
+\label{fig:BadExample}
+\end{figure}
+
+In contrast, the fingerprint approach provide more information and a compact representation when the same data is used. As shown in \ref{fig:tdeVisual}, a healthy vibration dataset produces a distinct and elliptical shaped fingerprint. This allows easier and faster visual anomaly detection showing the possible implementation in maintenance.
+(zwei unterschiedliche größen!) sample variance wir brauchen 1/n !)
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/tdeVisual.png}
+\caption{Example of a healthy fingerprint generated from the vibration data.}
+\label{fig:tdeVisual}
+\end{figure}
+
+The comparison demonstrates that the fingerprint representation preserves relevant information while significantly improving visual anomaly detection, making it an effective tool for condition monitoring and fault detection.

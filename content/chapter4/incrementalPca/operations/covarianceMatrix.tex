@@ -1,0 +1,37 @@
+\subsection{Covariance matrix}
+A major computational bottleneck of of the real-time streaming algorithm is the recalculation of the covariance matrix at each time step as the history window shifts.
+To solve this issue, the implementation exploits the overlap of a sliding window. When a new value is appended to the back of the window, a single embedding vector, named $tde_{old}$ is dropped from the active window and a new vector $tde_{new}$ is formed. All intermediate time-delay embedded vectors within the window stay the same, their respective structural contributions to the total covariance does not change. 
+The contribution of a single multidimensional-vector to the covariance matrix is found using an outer product $x{x}^T$. The incoming tde vectors all have the same dimension $d$ multiplying it by its own transpose it creates an $d*d$ square matrix. \\
+\begin{center}
+    ${tde} \cdot {tde}^T = 
+\begin{bmatrix} 
+x \\ 
+y \\ 
+z 
+\end{bmatrix}
+\begin{bmatrix} 
+x & y & z 
+\end{bmatrix} 
+= 
+\begin{bmatrix} 
+x^2 & xy & xz \\ 
+yx & y^2 & yz \\ 
+zx & zy & z^2 
+\end{bmatrix}$
+\end{center}
+
+Instead of calculating the covariance matrix from scratch each time new data arrives we introduce a running $d*d$ matrix which is kept and updated along the iterations. When a new vectors arrives the running covariance matrix does only have to update the incoming and outgoing dot products. 
+The running covariance matrix is maintained by incrementally updating the sum of outer products (scatter matrix) $S_t$. When the sliding window reaches a steady state, the matrix is updated by subtracting the outer product of the evicted, centered vector $\mathbf{x}_{\text{old}}$ and adding the outer product of the incoming centered vector $\mathbf{x}_{\text{new}}$:
+\begin{equation}
+    \mathbf{S}_t = \mathbf{S}_{t-1} - \left( \mathbf{x}_{\text{old}} \mathbf{x}_{\text{old}}^T \right) + \left( \mathbf{x}_{\text{new}} \mathbf{x}_{\text{new}}^T \right)
+    \label{eq:running_covariance_update}
+\end{equation}
+where $x_{new}, x_{old}$ represent the zero-mean centered time-delay embedding vectors. 
+The unbiased sample covariance matrix $\mathbf{\Sigma}_t$ is subsequently obtained by scaling the scatter matrix by the number of active degrees of freedom:
+\begin{equation}
+    \mathbf{\Sigma}_t = \frac{1}{N - 1} \mathbf{S}_t
+    \label{eq:covariance_scaling}
+\end{equation}
+where $N$ denotes the current sample count in the window ($N \ge 2$).his normalization ensures that the computed eigenvalues reflect true data variance independently of the active window sample size $N$.
+Now the complexity isn't dependent from the window size $W$ anymore but only the time delay embedding dimensions $d$.This improves the complexity from $O(N*(d*d))$ to $O(d*d)$. 
+This allows the window to be really large while keeping the speed constant to the dimensions used. 
