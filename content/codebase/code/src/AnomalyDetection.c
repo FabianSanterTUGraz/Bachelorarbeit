@@ -46,15 +46,28 @@ void embeddingIndexes(int* buffer, int windowSize, int dimensions, int tau)
     }
 }
 
+/*
+Issue which is solved by this function:
+Input in a higher dimensional point cloud of streaming data and the 
+algorithm should find the two main directions (axes) along which the
+data varies the most.
+q1: Point along the absolute axis of the data cloud. 1st principal component
+q2: Point along the second longest axis while staying strictly 90° to the fist component.
+*/
+
 void subspaceIteration(const float* runningCov, int dim, float* q1, float* q2)
 {
+    //for later comparison between the original directions and the resulting point
+    //(to ensure that the orientation is locked)
     float q1_old[dim];
     float q2_old[dim];
     
     copyArray(q1,q1_old,dim);
     copyArray(q2,q2_old,dim);
 
-    // Step 1: Matrix multiplication Z = C * Q
+    // Z = C * Q
+    //if a random vector is multiplied by C the matrix rotates and stretches toward 
+    // the direction of maximum variance (largest eigenvector)
     float z1[dim];
     float z2[dim];
 
@@ -69,21 +82,33 @@ void subspaceIteration(const float* runningCov, int dim, float* q1, float* q2)
             z2[i] += C * q2[j];
         }
     }
+    //after the stretching and rotating the length is not equal to 1 anymore 
+    // additionaly c pulls everything toward the first principle component 
 
+    //1.0 Normalize the first pc by dividing z1 by its length
     float norm1 = sqrtf(dotProduct(z1, z1, dim));
-    if (norm1 > 1e-6f) {
-        for (int i = 0; i < dim; i++) q1[i] = z1[i] / norm1;
+    if (norm1 > 1e-5f) 
+    {
+        for (int i = 0; i < dim; i++) 
+        {
+            q1[i] = z1[i] / norm1;
+        }
     }
 
+    //force z2 to be 90° onto z1
     float proj = dotProduct(q1, z2, dim);
     for (int i = 0; i < dim; i++) z2[i] -= proj * q1[i];
 
+    //normalization of q2
     float norm2 = sqrtf(dotProduct(z2, z2, dim));
-    if (norm2 > 1e-6f) {
-        for (int i = 0; i < dim; i++) q2[i] = z2[i] / norm2;
+    if (norm2 > 1e-5f) 
+    {
+        for (int i = 0; i < dim; i++) {
+            q2[i] = z2[i] / norm2;
+        }
     }
 
-    // 4. Sign-Locking (Prevents 180-degree flipping)
+    // compare with original directions to lock the orientation 
     if (dotProduct(q1, q1_old, dim) < 0.0f) {
         for (int i = 0; i < dim; i++) q1[i] = -q1[i];
     }
@@ -95,7 +120,7 @@ void subspaceIteration(const float* runningCov, int dim, float* q1, float* q2)
 int PCA(float* runningMean, float* runningCov, float* tde, float* slidingWindow, int dimensions,
         int windowSize, float newValue, int* indexes)
 {
-    static int sampleCount = 0; // reusing in C++/Java frage 
+    static int sampleCount = 0; // reusing in C++/Java frage wichtig static
 
     int tau = indexes[0] - indexes[1];
     bool isWindowFull = (sampleCount >= windowSize);
@@ -113,11 +138,9 @@ int PCA(float* runningMean, float* runningCov, float* tde, float* slidingWindow,
         oldRawAddress = tdeOldRaw;
     }
 
-    // 2. Slide window with new value
     slideWindow(slidingWindow, windowSize, newValue);
     sampleCount++;
 
-    // 3. Warm-up check
     int minSamples = (dimensions - 1) * tau + 1;
     if (sampleCount < minSamples)
     {
