@@ -35,7 +35,7 @@ int main()
 {
     std::vector<float> writeToFile;
     std::cout << "Real time anomaly detection...." << std::endl;
-    int i = 20;
+    int i = 30;
     std::string fileInput = std::to_string(i);
     std::string absolutePath = "Data/" + fileInput + ".csv";
     streamData DataStream(absolutePath);
@@ -44,9 +44,9 @@ int main()
     // Settings of sliding window and tde vector.
     // dimensions/tau must match d/tau in static_fingerprintvisualization.py
     // so the streaming and batch PCA embed the same windows for computeDelta.py.
-    int dimensions = 13;
-    int tau = 15;
-    int windowSize = 111562; // theoretisch extrem groß wählen
+    int dimensions = 6;
+    int tau = 20;
+    int windowSize = 1000; // theoretisch extrem groß wählen
 
     float slidingWindow[windowSize] = {0.0f};
     float tde[dimensions] = {0.0f};

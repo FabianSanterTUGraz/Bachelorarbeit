@@ -132,7 +132,7 @@ int PCA(float* runningMean, float* runningCov, float* tde, float* slidingWindow,
 
     if (isWindowFull)
     {
-        copyArray(tde,tdeOldRaw,dimensions);
+        embedding(tdeOldRaw,slidingWindow,dimensions,indexes);
         centerData(runningMean, tdeOldRaw, tdeOldCentered, dimensions);
         oldCenteredAddress = tdeOldCentered;
         oldRawAddress = tdeOldRaw;

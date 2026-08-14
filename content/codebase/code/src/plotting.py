@@ -31,8 +31,7 @@ scores = np.linalg.norm(projected, axis=1)
 scores_norm = (scores - np.min(scores)) / (np.max(scores) - np.min(scores))
 
 # --- 2D VISUAL FINGERPRINT PLOT ---
-plt.figure(figsize=(12, 6))
-fig, ax = plt.subplots(nrows=1, ncols=1)
+fig, ax = plt.subplots(figsize=(7,7))
 
 ax.scatter(projected[:, 0], projected[:, 1], s=8, c=colormaps["turbo"](scores_norm))
 ax.axis("off")
