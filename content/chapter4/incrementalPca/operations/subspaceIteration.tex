@@ -1,0 +1,12 @@
+\subsection{Subspace iteration}
+Once the running covariance matrix is updated by the time delay embedding vector the dominant feature directions have to be extracted to project the high dimensional point cloud onto an two dimensional plane. Conventional Principal Component Analysis relies on full eigenvector and eigenvalue decomposition which comes with a high dimensional cost of $O(d^3)$ (because the has to be reduced to diagonal form). By tracking the first two principal components $q_1$ and $q_2$ dynamically the subspace is updated incrementally instead of recomputing the components from scratch each iteration.
+\\ \\
+The whole function is defined as 
+\lstinputlisting[
+  language=C,
+  caption={FILL OUT!. The complete source code is listed in the Appendix~\ref{app:simplelinearregression}.\\~},
+  label={src:linregressionalgorithm},
+  firstnumber=120,
+  firstline=120,
+  lastline=158
+]{content/codebase/code/src/AnomalyDetection.c}

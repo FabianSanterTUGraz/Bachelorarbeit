@@ -47,12 +47,6 @@
 %% e.g., "alphabetic", "authoryear", ...
 %% The biblatex style which is being used for referencing. See
 %% biblatex documentation for further details and more values.
-%%
-%% CAUTION: if you change the style, please check for (in)compatible
-%%          "biblatex" package options in the file
-%%          "template/preamble.tex"! For example: "alphabetic" does
-%%          not have an option "dashed=..." and causes an error if it
-%%          does not get removed from the list of options.
 
 \newcommand{\mybiblatexdashed}{false}  %% "true" or "false"
 %% If true: replace recurring reference authors with a dash.
@@ -65,77 +59,49 @@
 
 \newcommand{\mydispositioncolor}{0,0,0}
 %% e.g., "30,103,182" (blue/turquois), "0,0,0" (black), ...
-%% Color of the headings and so forth in RGB (red,green,blue) values.
-%% NOTE: if you are using "0,0,0" for black, printers might still
-%%       recognize pages as color pages. In case this is a problem
-%%       (paying for color print-outs vs. paying for b/w-printouts)
-%%       please edit file "template/preamble.tex" and change
-%%       "\definecolor{DispositionColor}{RGB}{\mydispositioncolor}"
-%%       to "\definecolor{DispositionColor}{gray}{0}" and thus
-%%       overwriting the value of \mydispositioncolor above.
 
 \newcommand{\mycolorlinks}{true}  %% "true" or "false"
 %% Enables or disables colored links (hyperref package).
 
 \newcommand{\mytitlepage}{template/title_Thesis_TU_Graz}
-%% Your own or one of following pre-defined title pages:
-%% "template/title_plain_maketitle": simple maketitle page
-%% "template/title_Diplomarbeit_KF_Uni_Graz.tex": fancy (german) title page for KF Uni Graz
-%% "template/title_Thesis_TU_Graz":
-%%             titlepage for Graz University of Technology (correct
-%%             (old?) Corporate Design) by Karl Voit (2012)
-%% "template/title_Thesis_TU_Graz_-_kazemakase":
-%%             titlepage for Graz University of Technology
-%%             (correct new Corporate Design) by kazemakase (2013):
-%%             see https://github.com/novoid/LaTeX-KOMA-template/issues/5
-%% "template/title_VWA": titlepage for Vorwissenschaftliche Arbeit
-
 
 %% Load main settings for document preamble:
 \input{template/preamble}%% DO NOT REMOVE THIS LINE!
 
 
 \setboolean{english_affidavit}{true}  %% "true" or "false"
-%% If set to "true": the language of the statutory declaration text is set to
-%% English, otherwise it is in German.
-
 
 %% ========================================================================
 %%%% Document metadata
 %% ========================================================================
 
-%% general metadata:
-\newcommand{\myauthor}{Fabian Santer}  %% also used for PDF metadata (hyperref)
-\newcommand{\myauthorwithexistingtitles}{\myauthor{}}  %% including
-                                %% university degree already held
-                                %% (BSc, MSc, ...)
-\newcommand{\mytitle}{Real-time Anomaly Detection in Time Series Data}  %% also used for PDF metadata (hyperref)
-\newcommand{\mysubject}{SUBJECT}  %% also used for PDF metadata (hyperref)
-\newcommand{\mykeywords}{KEYWORDS}  %% also used for PDF metadata (hyperref)
+\newcommand{\myauthor}{Fabian Santer}
+\newcommand{\myauthorwithexistingtitles}{\myauthor{}}
+\newcommand{\mytitle}{Real-time Anomaly Detection in Time Series Data}
+\newcommand{\mysubject}{SUBJECT}
+\newcommand{\mykeywords}{KEYWORDS}
 
-%% this information is used only for generating the title page:
-\newcommand{\myworktitle}{Bachelor's Thesis}  %% official type of work like ``Bachelor theses''
-\newcommand{\mygrade}{Bachelor of Science} %% title you are getting with this work like ``Master of ...''
-\newcommand{\mystudy}{} %% your study like ``Arts''
-\newcommand{\mydegreeprogramme}{Bachelor's degree programme : Software Engineering and Management \mystudy} %% Master's or PhD degree programme
-\newcommand{\mydegreeprogrammegerman}{Masterstudium: \mystudy} %% Master's or PhD degree programme
-\newcommand{\myuniversity}{Graz University of Technology} %% your university/school
-\newcommand{\myuniversitygerman}{Technische Universität Graz} %% your university/school
-\newcommand{\myinstitute}{Institute of Visual Computing} %% affiliation
-\newcommand{\myinstitutehead}{Univ.-Prof. Dipl.-Ing. Dr.techn. Thomas Pock} %% head of institute
-\newcommand{\mysupervisor}{Dipl.-Math. Dr.techn. Ullrich Torsten} %% your supervisor
+\newcommand{\myworktitle}{Bachelor's Thesis}
+\newcommand{\mygrade}{Bachelor of Science}
+\newcommand{\mystudy}{}
+\newcommand{\mydegreeprogramme}{Bachelor's degree programme : Software Engineering and Management \mystudy}
+\newcommand{\mydegreeprogrammegerman}{Masterstudium: \mystudy}
+\newcommand{\myuniversity}{Graz University of Technology}
+\newcommand{\myuniversitygerman}{Technische Universität Graz}
+\newcommand{\myinstitute}{Institute of Visual Computing}
+\newcommand{\myinstitutehead}{Univ.-Prof. Dipl.-Ing. Dr.techn. Thomas Pock}
+\newcommand{\mysupervisor}{Dipl.-Math. Dr.techn. Ullrich Torsten}
 \newcommand{\mycosupervisors}{}
-\newcommand{\myevaluator}{Prof.~Some Genius} %% your evaluator
-\newcommand{\myhomestreet}{Aufkirchen 37} %% your home street (with house number)
-\newcommand{\myhometown}{Toblach} %% your home town
-\newcommand{\myhomepostalnumber}{39034} %% your postal number of home town
-\newcommand{\mysubmissionmonth}{month} %% month you are handing in
-\newcommand{\mysubmissionyear}{year} %% year you are handing in
-\newcommand{\mysubmissiontown}{Graz} %% town of handing in (or \myhometown)
+\newcommand{\myevaluator}{Prof.~Some Genius}
+\newcommand{\myhomestreet}{Aufkirchen 37}
+\newcommand{\myhometown}{Toblach}
+\newcommand{\myhomepostalnumber}{39034}
+\newcommand{\mysubmissionmonth}{month}
+\newcommand{\mysubmissionyear}{year}
+\newcommand{\mysubmissiontown}{Graz}
 
-%% additional information for generic_documentation title page
-\newcommand{\myid}{12230815} %% Matrikelnummer
-\newcommand{\mylecture}{LECTURE} %%
+\newcommand{\myid}{12230815}
+\newcommand{\mylecture}{LECTURE}
 
 
 %% ========================================================================
@@ -153,35 +119,30 @@
 %%%% MISC usepackages
 %% ========================================================================
 
-%% ... it's OK to put here your own usepackage commands ...
-%test
-
 \usepackage{soul}
 \usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{placeins}
 \usepackage{geometry}
 \usepackage{pdfpages}
-%\usepackage{siunitx}
 \usepackage{verbatim}
 \usepackage{tikz}
 \usetikzlibrary{arrows,calc,positioning,fit}
 \usepackage{float}
 
-
-
-%%listings package for clean code integration
+% Code listing configuration
 \usepackage{color}
 \usepackage{listings}
-\lstset{inputpath=../../src}
-\definecolor{javared}{rgb}{0.6,0,0} % for strings
-\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
-\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
-\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+
+% Define color palette
+\definecolor{javared}{rgb}{0.6,0,0}           % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35}   % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35}    % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75}% javadoc/docstrings
 
 \lstset{
-  inputpath=../../src,
-  language=Java,
+  inputpath={},                               % Overrides template default inputpath
+  language=C,
   escapeinside={//(*}{*)},
   captionpos=t,
   numbers=left,
@@ -200,73 +161,38 @@
   morecomment=[s][\color{javadocblue}]{/**}{*/}
 }
 
-% https://tug.org/FontCatalogue/mathfonts.html
-%\usepackage{lmodern}
-%\usepackage{cmbright}
-
 \geometry{a4paper, portrait, tmargin=1.5in, bmargin=1.5in, outer=1.5in}
 
 %% ========================================================================
 %%%% MISC self-defined commands and settings
 %% ========================================================================
 
-%% ... it's OK to put here your own newcommand/newenvironment-definitions ...
+\newcommand{\myLaT}{\LaTeX{}@TUG\xspace}
 
-
-
-
-\newcommand{\myLaT}{\LaTeX{}@TUG\xspace} %% LaTeX@TUG text "logo"
-
-\hyphenation{ex-am-ple hy-phen-ate}  %% in order to use German umlauts
-%% here (Ver-\"of-fent-li-chung), you have to check for
-%% activated \usepackage[T1]{fontenc} in the preamble
-
-%% override default language of babel: (be sure to know, what you're
-%% doing here)
-%\selectlanguage{american}
-%\selectlanguage{ngerman}
-
-%% ========================================================================
-%%%% Templates
-%% ========================================================================
-
-%% template for inserting figures:
-% \myfig{}%% filename
-%       {}%% width/height
-%       {}%% caption
-%       {}%% optional (short) caption for list of figures
-%       {fig:}%% label
-
-%% acronyms in small caps: \myacro{UNESCO}
+\hyphenation{ex-am-ple hy-phen-ate}
 
 \input{template/pdf_settings}  %% should be *last* definitions in preamble!
+
 %% ========================================================================
 %%%% begin{document}
 %% ========================================================================
 \begin{document}
 
-\frontmatter                    %% KOMA: roman page numbers and such; only available in scrbook
+\frontmatter                    %% KOMA: roman page numbers and such
 
 \input{\mytitlepage}
 
 \input{template/declaration_TU_Graz}
 
-
-%% include the abstract without chapter number but include it on table of contents:
 \input{content/abstract}
-
-
-
 
 \tableofcontents
 
 \listoffigures
 
-
 \listoftables
 
-
-\mainmatter                     %% KOMA: marks main part using arabic page numbers and such; only available in scrbook
+\mainmatter                     %% KOMA: marks main part using arabic page numbers
 
 \include{content/introduction/index}
 \include{content/background/index}
@@ -277,20 +203,9 @@
 \include{content/conclusion}
 
 \printbibliography              %% remove, if using BibTeX instead of biblatex
-% \include{further_ressources}  %% this is a suggestion: you have to create this file on demand
 
-\appendix                       %% closes main document, appendix follows until end; only available in book-classes
+\appendix                       %% closes main document, appendix follows
 \addpart*{Appendix}             %% adding Appendix to tableofcontents
 \input{content/appendix/index}
 
-%%%% end{document}
 \end{document}
-%% vim:foldmethod=expr
-%% vim:fde=getline(v\:lnum)=~'^%%%%\ .\\+'?'>1'\:'='
-%%% Local Variables:
-%%% mode: latex
-%%% mode: auto-fill
-%%% mode: flyspell
-%%% eval: (ispell-change-dictionary "en_US")
-%%% TeX--: "main"
-%%% End:
