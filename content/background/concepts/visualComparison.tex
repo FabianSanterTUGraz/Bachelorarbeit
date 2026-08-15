@@ -1,22 +1,23 @@
 \subsection{Visual comparison}
-
-When comparing the plain plotting and fingerprint approach a clear improvement can be observed. While the raw vibration signal does indeed provide an accurate depiction of the machines behavior over time, the interpretation is difficult for an non expert human. 
-As shown in Figure~\ref{fig:BadExample}, the signal appears as a continuous wave in which patterns are not immediately visible. This causes that, extracting insights about the machine's condition requires further analysis or a high level of expertise.
-
+Conventional time series representations of vibration signals and highly clustered data in general tend to suffer from over-plotted when high-frequency noise is observed over a extended time period. As shown in Figure \ref{fig:BadExample}, high sampling rates compress the signal into an high-density amplitude block. The result is that phase shifts and harmonic distortions remain visually hidden consequently making it unsuitable for condition monitoring. 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{figures/vibration_data.png}
 \caption{Example of the raw vibration signal.}
 \label{fig:BadExample}
 \end{figure}
-
-In contrast, the fingerprint approach provide more information and a compact representation when the same data is used. As shown in \ref{fig:tdeVisual}, a healthy vibration dataset produces a distinct and elliptical shaped fingerprint. This allows easier and faster visual anomaly detection showing the possible implementation in maintenance.
-(zwei unterschiedliche größen!) sample variance wir brauchen 1/n !)
+In contrast, transforming the data into a Time Delay Embedding phase space produces a highly compact visually informative fingerprint.Figure \ref{fig:tdeHealty} shows the baseline fingerprint under healthy normal operating conditions, generated with the algorithm described in Section \ref{section:OriginalImplementation} 
+A healthy fingerprint is characterized by signal periodicity, which "results in elliptical structures and 'round' point cloud shapes" \cite{rakuschek2025visual}. Furthermore, "noise accumulates near the center while vibrations cause the circular patterns with a larger radius than noise," with these circular structures persisting even under high noise levels \cite{rakuschek2025visual}.
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{figures/tdeVisual.png}
-\caption{Example of a healthy fingerprint generated from the vibration data.}
-\label{fig:tdeVisual}
+\includegraphics[width=0.5\textwidth]{figures/tdeVisual.png}
+\caption{Example of a faulty fingerprint from a machine running in presence of mechanical imbalance at shaft.}
+\label{fig:tdeBadExample}
 \end{figure}
-
-The comparison demonstrates that the fingerprint representation preserves relevant information while significantly improving visual anomaly detection, making it an effective tool for condition monitoring and fault detection.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/healtyFingerprint.png}
+\caption{Example of a fingerprint under no faulty conditions.}
+\label{fig:tdeHealty}
+\end{figure}
+Comparing the faulty fingerprint in Figure\ref{fig:tdeBadExample} with the healthy baseline in Figure \ref{fig:tdeHealty} shows distinct geometric distortions. For instance in figure \ref{fig:BadExample} a mechanical shaft imbalance wraps the phase trajectory into an asymmetric pattern while the healthy fingerprint shows a clean and periodic shape. 
