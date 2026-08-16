@@ -41,29 +41,31 @@ int main()
     streamData DataStream(absolutePath);
     std::string line;
 
-    // Settings of sliding window and tde vector.
-    // dimensions/tau must match d/tau in static_fingerprintvisualization.py
-    // so the streaming and batch PCA embed the same windows for computeDelta.py.
-    int dimensions = 6;
-    int tau = 20;
-    int windowSize = 1000; // theoretisch extrem groß wählen
+    // Time-delay embedding parameters.
+    int dimensions = 6;   // number of embedding dimensions
+    int tau = 20;         // delay between successive embedding coordinates
+    int windowSize = 1000; // length of the sliding window buffer
 
-    float slidingWindow[windowSize] = {0.0f};
-    float tde[dimensions] = {0.0f};
+    float slidingWindow[windowSize] = {0.0f}; // raw streaming values
+    float tde[dimensions] = {0.0f};           // current time-delay embedding vector
 
+    // Precompute the sliding-window offsets used to build each embedding.
     int tdeIndexes[dimensions];
     embeddingIndexes(tdeIndexes, windowSize, dimensions, tau);
 
+    // Incrementally updated statistics for streaming PCA.
     float runningMean[dimensions] = {0.0f};
     float runningCov[dimensions * dimensions] = {0.0f};
 
+    // Top two principal components (eigenvectors) of the embedding.
     float principalComponent1[dimensions] = {0.0f};
     float principalComponent2[dimensions] = {0.0f};
-    
-    principalComponent1[0] = 1.0f; // Vprev starts at identity
-    principalComponent2[1] = 1.0f; // Vprev starts at identity
 
+    // Initialize the components to the identity basis vectors.
+    principalComponent1[0] = 1.0f;
+    principalComponent2[1] = 1.0f;
 
+    // Projection of the current embedding onto the two principal components.
     float outX = 0.0f;
     float outY = 0.0f;
 
