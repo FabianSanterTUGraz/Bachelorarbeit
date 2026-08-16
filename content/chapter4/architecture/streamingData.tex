@@ -1,5 +1,13 @@
 \subsection{Streaming Data}
 The main data source are single column comma-separated values which are read by a stream of c++ library "fstreams". The stream is an independent object which is created in the main file with a corresponding file path. \\ \\
+\lstinputlisting[
+  language=C,
+  caption={Object which handles the streaming of data.},
+  label={src:linregressionalgorithm},
+  firstnumber=1,
+  firstline=1,
+  lastline=36
+]{content/codebase/code/include/streamingData.hpp}
 Rather than loading complete dataset batches into memory, incoming sensor data is ingested and processed point-by-point from comma separated values.
 Data ingestion is encapsulated within a custom stream handler class (\texttt{streamData}), which wraps standard C++ file input streams (\texttt{std::ifstream}).
 To eliminate potential data crashes, data races and runtime memory reallocation overhead, all operational state buffers are pre-allocated on the stack during configuration.
