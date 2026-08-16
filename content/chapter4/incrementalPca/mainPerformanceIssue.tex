@@ -1,5 +1,6 @@
 \subsection{Operations}
-Inside the PCA the operations with the most computational rewuirments can be found namely(from most expensive to least):\\
+To ensure real-time responsiveness in principle component analysis each sub-step in the         algorithm must operate incrementally rather than recalculate values.
+These operations are: running mean and covariance matrix, centering incoming vectors and updating feature directions.
 \input{content/chapter4/incrementalPca/operations/mean}
 \input{content/chapter4/incrementalPca/operations/covarianceMatrix}
 \input{content/chapter4/incrementalPca/operations/subspaceIteration}
