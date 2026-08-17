@@ -52,7 +52,7 @@ Input in a higher dimensional point cloud of streaming data and the
 algorithm should find the two main directions (axes) along which the
 data varies the most.
 q1: Point along the absolute axis of the data cloud. 1st principal component
-q2: Point along the second longest axis while staying strictly 90° to the fist component.
+q2: Point along the second longest axis while staying strictly 90 degree to the fist component.
 */
 
 void subspaceIteration(const float* runningCov, int dim, float* q1, float* q2)
@@ -95,7 +95,7 @@ void subspaceIteration(const float* runningCov, int dim, float* q1, float* q2)
         }
     }
 
-    //force z2 to be 90° onto z1
+    //force z2 to be 90 degree onto z1
     float proj = dotProduct(q1, z2, dim);
     for (int i = 0; i < dim; i++) z2[i] -= proj * q1[i];
 
