@@ -1,7 +1,7 @@
 \subsection{Subspace iteration}
 Once the running covariance matrix is updated by the time delay embedding vector, the dominant feature directions are extracted to project the high dimensional point cloud onto an two-dimensional plane. Conventional Principal Component Analysis relies on full eignedecomposition which comes with a high dimensional cost of $\mathcal{O}(d^3)$ because the matrix must be reduced to diagonal form. By tracking the first two principal components $q_1$ and $q_2$ dynamically, the subspace is updated incrementally, avoiding full recomputation of the components from scratch at each iteration.
 \\ \\
-To ensure that the eigenvectors signs don't get flipped by 180° and keep their original directions a copy of the original eigenvector is taken which is later used to touch up if necessary. 
+To ensure that the eigenvectors signs don't get flipped by 180 degree and keep their original directions a copy of the original eigenvector is taken which is later used to touch up if necessary. 
 \begin{equation}
     q_{1,\text{old}} = q_1^{k-1}, \quad q_{2,\text{old}} = q_2^{k-1}.
     \label{eq:old_eigenvectors}
@@ -20,7 +20,7 @@ The first principal component is normalized to unit length:
     q_1^k = \frac{z_1}{\|z_1\|_2}.
     \label{eq:norm_q1}
 \end{equation}
-The second principal component must be strictly orthogonal (90°)to the first principle component. To achieve this the Gram-Schmidt Operationalization strips the projection of $z_2$ along $q_1^k$.
+The second principal component must be strictly orthogonal (90 degree)to the first principle component. To achieve this the Gram-Schmidt Operationalization strips the projection of $z_2$ along $q_1^k$.
 \begin{equation}
     z_2^{\perp} = z_2 - \left( (q_1^k)^T z_2 \right) q_1^k.
     \label{eq:gram_schmidt}
