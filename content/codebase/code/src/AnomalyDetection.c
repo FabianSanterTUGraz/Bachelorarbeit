@@ -27,15 +27,6 @@ void slideWindow(float* slidingWindow, int size, float value)
     slidingWindow[size - 1] = value;
 }
 
-void embedding(float* buffer, float* slidingWindow, int size, int* indexes)
-{
-    for (int i = 0; i < size; i++)
-    {
-        int xt = indexes[i];
-        buffer[i] = slidingWindow[xt];
-    }
-}
-
 void embeddingIndexes(int* buffer, int windowSize, int dimensions, int tau)
 {
     int w = windowSize - 1;
@@ -43,6 +34,15 @@ void embeddingIndexes(int* buffer, int windowSize, int dimensions, int tau)
     {
         int xt = w - i * tau;
         buffer[i] = xt;
+    }
+}
+
+void embedding(float* buffer, float* slidingWindow, int size, int* indexes)
+{
+    for (int i = 0; i < size; i++)
+    {
+        int xt = indexes[i];
+        buffer[i] = slidingWindow[xt];
     }
 }
 
