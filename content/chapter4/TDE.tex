@@ -1,1 +1,20 @@
-\section{TDE}
+\section{Integration time delay embedding vectors}
+To improve runtime computational overhead, the indexes offsets required for time-delay embeddings are precomputed once during initialization instead than recalculated from scratch at each streaming step. The embeddingIndexes function calculates these index positions based on the specified embedding dimensions and time lag paramenter tau. 
+\lstinputlisting[
+  language=C,
+  caption={All variables needed to call the algorythm},
+  label={src:linregressionalgorithm},
+  firstnumber=30,
+  firstline=30,
+  lastline=38
+]{content/codebase/code/src/AnomalyDetection.c}
+These index mappings remain constant trough execution and they are reused across all following iterations. Using these precomputed indexes, the embedding function extracts the corresponding values directly from the sliding window buffer so construct the current embedding vector.
+\lstinputlisting[
+  language=C,
+  caption={All variables needed to call the algorythm},
+  label={src:linregressionalgorithm},
+  firstnumber=40,
+  firstline=40,
+  lastline=47
+]{content/codebase/code/src/AnomalyDetection.c}
+To ensure valid array indexing the sliding window must be sufficiently larger than $(d - 1) * \tau + 1$, where d is the embedding dimension and $\tau$ the time lag.

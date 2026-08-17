@@ -7,14 +7,14 @@ Plotting the raw TDE output yields a point cloud with a complex geometry in $d$-
 \caption{Visualization of a 3D phase-space point cloud (yellow) and its 1D projection along the principal axis of maximum variance (orange).}
 \label{fig:pointCloud}
 \end{figure}
-One possible approach would be to project all these points onto one single dimension. However, as visualized in Figure~\ref{fig:pointCloud}, when projecting all points onto a single axis, all additional data is lost.
+One possible approach would be to project all these points onto one single dimension. However, as visualized in Figure~\ref{fig:pointCloud}, when projecting all points onto a single axis, all additional data is lost(demonstrated by the orange points).
 When a point $\mathbf{x}$ is projected onto a unit vector $\hat{\mathbf{u}}$, the resulting projected vector $\mathbf{x}'$ lies along $\hat{\mathbf{u}}$ with a magnitude defined by the inner product $\mathbf{x}^T \hat{\mathbf{u}}$:
 \begin{equation}
 \mathbf{x}' = (\mathbf{x}^T \hat{\mathbf{u}}) \hat{\mathbf{u}}
 \end{equation}
 The squared inner product $(\mathbf{x}^T \hat{\mathbf{u}})^2$ represents the magnitude of the projection. This squared quantity is minimized when $\mathbf{x}$ is orthogonal to $\hat{\mathbf{u}}$ and maximized when $\mathbf{x}$ is parallel to it. 
 
-PCA tries to find the unit vector $\hat{\mathbf{u}}$ that maximizes the sum of these squared projections across the entire dataset. Using the sample covariance matrix
+The method tries to find the unit vector $\hat{\mathbf{u}}$ that maximizes the sum of these squared projections across the entire dataset. Using the sample covariance matrix
 \begin{equation}
 \mathbf{C} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_i \mathbf{x}_i^T
 \label{eq:covariance_matrix}
