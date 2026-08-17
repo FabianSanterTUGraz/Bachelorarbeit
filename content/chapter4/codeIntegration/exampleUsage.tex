@@ -1,0 +1,12 @@
+\subsection{Example Usage}
+The algorithm can process arbitrary time series data, provided incoming samples are passed continuously to the processNewDataPoints function. In the reference demonstration, the projected coordinates are appended to a dedicated output vector and then written to an text file, however the output stream can also be integrated directly into a real-time visualization interface. 
+\lstinputlisting[
+  language=C,
+  caption={Example usage of the algorythm with streaming data},
+  label={src:linregressionalgorithm},
+  firstnumber=72,
+  firstline=72,
+  lastline=88
+]{content/codebase/code/anomaly_detection.cpp}
+The pipeline can process multiple concurrent data streams or also pause and resume execution. As a result
+the underlying data sources and data storage remains decoupled from the core routine.

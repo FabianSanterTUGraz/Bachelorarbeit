@@ -1,10 +1,13 @@
 \subsection{Data Containers}
-Due to the fact that handling memory dynamically in c or c++ (unlike with Java's automatic garbage collection) the most data containers are allocated before the main API call this includes principle component analysis specific variables but also sliding window and tde stuff. Before calling the main API following variables have to be defined with the same or similar variable name to prevent confusion.
+\label{section:dataContainers}
+Unlike programming languages which use automatic garbage collection (such as Java), dynamic memory management in C/C++ requires allocation strategies to eliminate memory fragmentation and buffer overflows. In consequent primary data variables are pre-allocated to the functions stack before the main API calls.
 \lstinputlisting[
   language=C,
-  caption={FILL OUT!. The complete source code is listed in the Appendix~\ref{app:simplelinearregression}.\\~},
+  caption={All variables needed to call the algorythm},
   label={src:linregressionalgorithm},
   firstnumber=44,
   firstline=44,
   lastline=70
 ]{content/codebase/code/anomaly_detection.cpp}
+The data types were intentionally cheosen to be generic across the entire project to make sure to support a straightforward cross-implementation.
+To reuse the code these initialization steps can be integrated directly. Only the delay parameter tau and the window size has to be adapted following the recommendations evaluated in the evaluation section(hier noch ref hinzufügen das kapitel gibt es noch nicht).
