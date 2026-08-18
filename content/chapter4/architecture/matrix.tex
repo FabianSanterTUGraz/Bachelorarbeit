@@ -1,3 +1,11 @@
 \subsection{Matrices and Vectors}
 Do to the constrain that the implementation should be able to be used in all c-family with minimal changes the source code build in vectors should not be used. 
-Instead, multidimensional matrices and state vectors are represented as contiguous 1D flat arrays. This design ensures consistent memory layouts across execution environments while simplifying low-level pointer arithmetic and dynamic memory management in C11.
+Instead, multidimensional matrices and state vectors are represented as contiguous 1D flat arrays. This design ensures consistent memory layouts across execution environments while simplifying low-level pointer arithmetic and dynamic memory management.
+\lstinputlisting[
+  language=C,
+  caption={Acsessing values of the flat array at index i.},
+  label={src:flad1DMatrix},
+  firstnumber=193,
+  firstline=193,
+  lastline=197
+]{content/codebase/code/src/AnomalyDetection.c}
