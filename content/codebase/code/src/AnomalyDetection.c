@@ -2,14 +2,14 @@
 
 // Main api call
 int processNewDataPoint(float newValue, float* tde, float* slidingWindow, float* runningMean,
-                        float* runningCov, float* principalComponent1, float* principalComponent2, int* indexes,
+                        float* runningCov, float* runningScatter,float* principalComponent1, float* principalComponent2, int* indexes,
                         int windowSize, int dimensions, float* outX, float* outY)
 {
-    if (PCA(runningMean, runningCov, tde, slidingWindow, dimensions, windowSize, newValue, indexes) == 1)
+    if (PCA(runningMean, runningCov, runningScatter,tde, slidingWindow, dimensions, windowSize, newValue, indexes) == 1)
     {
         return 1;
     }
-    
+
     subspaceIteration(runningCov, dimensions, principalComponent1, principalComponent2);
 
     *outX = dotProduct(tde,principalComponent1,dimensions);
@@ -48,7 +48,7 @@ void embedding(float* buffer, float* slidingWindow, int size, int* indexes)
 
 /*
 Issue which is solved by this function:
-Input in a higher dimensional point cloud of streaming data and the 
+Input in a higher dimensional point cloud of streaming data and the
 algorithm should find the two main directions (axes) along which the
 data varies the most.
 q1: Point along the absolute axis of the data cloud. 1st principal component
@@ -61,12 +61,12 @@ void subspaceIteration(const float* runningCov, int dim, float* q1, float* q2)
     //(to ensure that the orientation is locked)
     float q1_old[dim];
     float q2_old[dim];
-    
+
     copyArray(q1,q1_old,dim);
     copyArray(q2,q2_old,dim);
 
     // Z = C * Q
-    //if a random vector is multiplied by C the matrix rotates and stretches toward 
+    //if a random vector is multiplied by C the matrix rotates and stretches toward
     // the direction of maximum variance (largest eigenvector)
     float z1[dim];
     float z2[dim];
@@ -82,14 +82,14 @@ void subspaceIteration(const float* runningCov, int dim, float* q1, float* q2)
             z2[i] += C * q2[j];
         }
     }
-    //after the stretching and rotating the length is not equal to 1 anymore 
-    // additionaly c pulls everything toward the first principle component 
+    //after the stretching and rotating the length is not equal to 1 anymore
+    // additionaly c pulls everything toward the first principle component
 
     //1.0 Normalize the first pc by dividing z1 by its length
     float norm1 = sqrtf(dotProduct(z1, z1, dim));
-    if (norm1 > 1e-5f) 
+    if (norm1 > 1e-5f)
     {
-        for (int i = 0; i < dim; i++) 
+        for (int i = 0; i < dim; i++)
         {
             q1[i] = z1[i] / norm1;
         }
@@ -101,14 +101,14 @@ void subspaceIteration(const float* runningCov, int dim, float* q1, float* q2)
 
     //normalization of q2
     float norm2 = sqrtf(dotProduct(z2, z2, dim));
-    if (norm2 > 1e-5f) 
+    if (norm2 > 1e-5f)
     {
         for (int i = 0; i < dim; i++) {
             q2[i] = z2[i] / norm2;
         }
     }
 
-    // compare with original directions to lock the orientation 
+    // compare with original directions to lock the orientation
     if (dotProduct(q1, q1_old, dim) < 0.0f) {
         for (int i = 0; i < dim; i++) q1[i] = -q1[i];
     }
@@ -117,7 +117,7 @@ void subspaceIteration(const float* runningCov, int dim, float* q1, float* q2)
     }
 }
 
-int PCA(float* runningMean, float* runningCov, float* tde, float* slidingWindow, int dimensions,
+int PCA(float* runningMean, float* runningCov, float* runningScatter,float* tde, float* slidingWindow, int dimensions,
         int windowSize, float newValue, int* indexes)
 {
     static int sampleCount = 0; // reusing in C++/Java frage wichtig static
@@ -150,9 +150,21 @@ int PCA(float* runningMean, float* runningCov, float* tde, float* slidingWindow,
     int sampleSize = isWindowFull ? (windowSize - (dimensions - 1) * tau) : (sampleCount - (dimensions - 1) * tau);
 
     embedding(tde, slidingWindow, dimensions, indexes);
+
+    float tdeCenteredOldMean[dimensions];
+    if (!isWindowFull) {
+        centerData(runningMean,tde,tdeCenteredOldMean,dimensions);
+    }
+
     updateMean(runningMean, dimensions, sampleSize, tde, oldRawAddress);
-    centerData(runningMean, tde, tde, dimensions); 
-    updateCovariance(runningCov, dimensions, tde, oldCenteredAddress, sampleSize);
+    centerData(runningMean, tde, tde, dimensions);
+
+    if (isWindowFull) {
+        updateCovariance(runningCov,dimensions,tde, oldCenteredAddress,sampleSize);
+    }else {
+        updateCovarianceIncremental(runningScatter, dimensions, tdeCenteredOldMean, tde, sampleSize);
+        scatterToCovariance(runningScatter, runningCov, dimensions, sampleSize);
+    }
 
     return 0;
 }
@@ -205,20 +217,31 @@ void updateCovariance(float* runningCov, int dimensions, const float* newCentere
         for (int j = 0; j < dimensions; j++)
         {
             int covIdx = indexAccessHelper(i, j, dimensions);
-            
-            if (oldCentered != NULL)
-            {
-                // Sliding window (fixed n): Add new, subtract old
-                float contribution = (newCentered[i] * newCentered[j]) - (oldCentered[i] * oldCentered[j]);
-                runningCov[covIdx] += contribution / (float)sampleSize;
-            }
-            else
-            {
-                // Growing window (increasing n): Running average update
-                float contribution = newCentered[i] * newCentered[j];
-                runningCov[covIdx] += (contribution - runningCov[covIdx]) / (float)sampleSize;
-            }
+            float contribution = (newCentered[i] * newCentered[j]) - (oldCentered[i] * oldCentered[j]);
+            runningCov[covIdx] += contribution / (float)sampleSize;
         }
+    }
+}
+
+void updateCovarianceIncremental(float* runningScatter, int dimensions,
+                                  const float* deltaOld, const float* deltaNew, int sampleSize)
+{
+    for (int i = 0; i < dimensions; i++)
+    {
+        for (int j = 0; j < dimensions; j++)
+        {
+            int idx = indexAccessHelper(i, j, dimensions);
+            runningScatter[idx] += deltaOld[i] * deltaNew[j];
+        }
+    }
+}
+
+void scatterToCovariance(const float* scatter, float* covOut, int dimensions, int sampleSize)
+{
+    float denom = (sampleSize > 1) ? (float)(sampleSize - 1) : 1.0f;
+    for (int k = 0; k < dimensions * dimensions; k++)
+    {
+        covOut[k] = scatter[k] / denom;
     }
 }
 

@@ -20,6 +20,7 @@ OUTPUT_DIR = output
 
 # Target name
 TARGET = anomaly_detection
+VALIDATION_TARGET = validation
 
 # Find all C++ source files
 CXX_SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
@@ -43,42 +44,46 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET).exe $(OBJECTS)
 	@echo "Build complete: $(TARGET).exe"
 
-# Compile C++ source files to object files
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Compile C source files to object files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Alternative: single command to compile everything
 quick:
 	$(CXX) $(CXXFLAGS) -o $(TARGET).exe $(CXX_SOURCES) $(C_SOURCES)
 
-# Run the program
+$(VALIDATION_TARGET): validation.o $(C_OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $(VALIDATION_TARGET).exe validation.o $(C_OBJECTS)
+	@echo "Build complete: $(VALIDATION_TARGET).exe"
+
+validation.o: validation.cpp
+	$(CXX) $(CXXFLAGS) -c validation.cpp -o validation.o
+
+run-validate: $(VALIDATION_TARGET)
+	./$(VALIDATION_TARGET).exe
+
 run: $(TARGET)
 	./$(TARGET).exe
 
-# Clean the executable and object files
 clean:
-	del $(TARGET).exe $(SRC_DIR)\*.o *.o 2>nul || true
+	del $(TARGET).exe $(VALIDATION_TARGET).exe validation.o $(SRC_DIR)\*.o *.o 2>nul || true
 
-# Clean everything including object files
 cleanall: clean
 	@echo "Cleaned all build files"
 
-# Help command
 help:
 	@echo "Commands (use mingw32-make):"
-	@echo "  mingw32-make       - Build the program"
-	@echo "  mingw32-make quick - Quick build (single command)"
-	@echo "  mingw32-make run   - Build and run"
-	@echo "  mingw32-make clean - Remove executable and object files"
+	@echo "  mingw32-make               - Build the program"
+	@echo "  mingw32-make quick         - Quick build (single command)"
+	@echo "  mingw32-make run           - Build and run"
+	@echo "  mingw32-make validate_pca  - Build the validation program"
+	@echo "  mingw32-make run-validate  - Build and run the validation program"
+	@echo "  mingw32-make clean         - Remove executable and object files"
 
-# Debug build
 debug: CXXFLAGS += -g -DDEBUG
 debug: CFLAGS += -g -DDEBUG
 debug: clean $(TARGET)
 	@echo "Debug build complete"
 
-.PHONY: all run clean cleanall help debug quick
+.PHONY: all run run-validate clean cleanall help debug quick

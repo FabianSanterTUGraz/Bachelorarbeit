@@ -12,7 +12,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 OUTPUT_PATH = os.path.join(OUTPUT_DIR, "output.txt")
 PNG_PATH = os.path.join(OUTPUT_DIR, "output.png")
 
-df = pd.read_csv(OUTPUT_PATH, nrows=111563, header=None, sep=',', names=['X', 'Y'])
+df = pd.read_csv(OUTPUT_PATH, nrows=20000, header=None, sep=',', names=['X', 'Y'])
 
 projected = df[['X', 'Y']].to_numpy()
 

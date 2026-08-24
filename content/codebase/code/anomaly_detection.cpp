@@ -35,16 +35,15 @@ int main()
 {
     std::vector<float> writeToFile;
     std::cout << "Real time anomaly detection...." << std::endl;
-    int i = 30;
-    std::string fileInput = std::to_string(i);
+    std::string fileInput = "evaluation_reduced";
     std::string absolutePath = "Data/" + fileInput + ".csv";
     streamData DataStream(absolutePath);
     std::string line;
 
     // Time-delay embedding parameters.
-    int dimensions = 6;   // number of embedding dimensions
-    int tau = 20;         // delay between successive embedding coordinates
-    int windowSize = 1000; // length of the sliding window buffer
+    const int dimensions = 15;   // number of embedding dimensions
+    const int tau = 1;         // delay between successive embedding coordinates
+    const int windowSize = 20000; // length of the sliding window buffer
 
     float slidingWindow[windowSize] = {0.0f}; // raw streaming values
     float tde[dimensions] = {0.0f};           // current time-delay embedding vector
@@ -56,6 +55,7 @@ int main()
     // Incrementally updated statistics for streaming PCA.
     float runningMean[dimensions] = {0.0f};
     float runningCov[dimensions * dimensions] = {0.0f};
+    float runningScatter[dimensions * dimensions] = {0.0f};
 
     // Top two principal components (eigenvectors) of the embedding.
     float principalComponent1[dimensions] = {0.0f};
@@ -78,7 +78,7 @@ int main()
         }
         float value = std::stof(line);
 
-        if (processNewDataPoint(value, tde, slidingWindow, runningMean, runningCov, principalComponent1,
+        if (processNewDataPoint(value, tde, slidingWindow, runningMean, runningCov, runningScatter,principalComponent1,
                                 principalComponent2, tdeIndexes, windowSize, dimensions,
                                 &outX, &outY) != 1)
         {

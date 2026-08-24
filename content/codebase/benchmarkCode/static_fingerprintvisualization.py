@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 from sklearn.decomposition import PCA
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_PATH = os.path.join(SCRIPT_DIR, "..", "code", "Data", "01 - m1_half_shaft_speed_no_mechanical_load.csv")
+DATA_PATH = os.path.join(SCRIPT_DIR, "..", "code", "Data", "evaluation_reduced.csv")
 BENCHMARK_RESULTS_PATH = os.path.join(SCRIPT_DIR, "data", "benchmarkResults.txt")
 STATIC_RESULT_PLOT_PATH = os.path.join(SCRIPT_DIR, "data", "StaticResult.png")
 
@@ -52,7 +52,7 @@ def plot_embedding(ax, tde, title="TDE", benchmark_results_path=BENCHMARK_RESULT
     ax.set_title(title, fontsize=30)
 
 
-values = np.loadtxt(DATA_PATH, skiprows=1, max_rows=25000)
+values = np.loadtxt(DATA_PATH, skiprows=1, max_rows=20000)
 
 # Input: values.npy as a 1D numpy array, ideally a vibration
 fig, ax = plt.subplots(figsize=(7, 7))
