@@ -33,5 +33,5 @@ The unbiased sample covariance matrix $\mathbf{\Sigma}_t$ is subsequently obtain
     \label{eq:covariance_scaling}
 \end{equation}
 where $N$ denotes the current sample count in the window ($N \ge 2$).his normalization ensures that the computed eigenvalues reflect true data variance independently of the active window sample size $N$.
-Now the complexity isn't dependent from the window size $W$ anymore but only the time delay embedding dimensions $d$.This improves the complexity from $O(N*(d*d))$ to $O(d*d)$. 
+Now the complexity isn't dependent of the window size $W$ anymore but only the time delay embedding dimensions $d$.This improves the complexity from $O(N*(d*d))$ to $O(d*d)$. 
 This allows the window to be really large while keeping the speed constant to the dimensions used. 

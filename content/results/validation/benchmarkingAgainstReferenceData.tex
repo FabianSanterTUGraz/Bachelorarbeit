@@ -1,0 +1,87 @@
+\subsection{Benchmarking against Reference Data}
+To validate the implementation the tutorial by \cite{CheckForCorectness} is used as a reference, as it provides a full computation of an principal component analysis based on a small, deterministic dataset. The output of the incremental principal component analysis is compared step by step against the values reported in this reference. The sliding window is configured to span the entire input dataset $w = 10$, the embedding dimension is set to $d =2$, corresponding to the two-dimensional input data and the time delay is set ti $\tau = 0$ since the reference example does not involve any temporal lag.
+\begin{figure}[htbp]
+  \centering
+  \setlength{\arraycolsep}{8pt}
+  $\text{Data} = 
+  \begin{array}{r|r}
+    x & y \\
+    \hline
+    2.5 & 2.4 \\
+    0.5 & 0.7 \\
+    2.2 & 2.9 \\
+    1.9 & 2.2 \\
+    3.1 & 3.0 \\
+    2.3 & 2.7 \\
+    2.0 & 1.6 \\
+    1.0 & 1.1 \\
+    1.5 & 1.6 \\
+    1.1 & 0.9
+  \end{array}
+  \qquad\qquad
+  \text{DataAdjust} = 
+  \begin{array}{r|r}
+    x & y \\
+    \hline
+    .69 & .49 \\
+    -1.31 & -1.21 \\
+    .39 & .99 \\
+    .09 & .29 \\
+    1.29 & 1.09 \\
+    .49 & .79 \\
+    .19 & -.31 \\
+    -.81 & -.81 \\
+    -.31 & -.31 \\
+    -.71 & -1.01
+  \end{array}$
+
+  \vspace{0.4cm}
+
+  % Plot graphic inclusion
+  %\includegraphics[width=0.55\textwidth]{content/figures/PCAdata.png}
+
+  \caption{PCA reference dataset: original values (left) and mean-adjusted values (right) from the validation data.}
+  \label{fig:pca_example_data}
+\end{figure}
+
+Test
+
+\begin{equation}
+cov = \begin{pmatrix}
+.616555556 & .615444444 \\
+.615444444 & .716555556
+\end{pmatrix}
+\end{equation}
+
+and the corresponding eigenvectors and eigenvalues: 
+\begin{equation}
+eigenvalues = \begin{pmatrix}
+.0490833989 \\
+1.28402771
+\end{pmatrix}
+eigenvectors = \begin{pmatrix}
+-.735178656 & -.677873399 \\
+.677873399 & -.735178656
+\end{pmatrix}
+\end{equation}
+\begin{table}[htbp]
+\centering
+\[
+\begin{array}{c}
+x \\
+\hline
+-.827970186 \\
+1.77758033 \\
+-.992197494 \\
+-.274210416 \\
+-1.67580142 \\
+-.912949103 \\
+.0991094375 \\
+1.14457216 \\
+.438046137 \\
+1.22382056
+\end{array}
+\]
+\caption{The resulting data using only the most significant eigenvectors.}
+\label{tab:pca_transformed}
+\end{table}
