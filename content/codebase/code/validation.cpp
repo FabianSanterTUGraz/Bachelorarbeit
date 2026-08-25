@@ -29,7 +29,6 @@ int main() {
         updateCovarianceIncremental(runningScatter, dimensions, deltaOld, deltaNew, n);
     }
 
-    // Normalize scatter matrix into the final covariance matrix
     scatterToCovariance(runningScatter, runningCov, dimensions, inputSize);
 
     std::cout << "Running mean: " << runningMean[0] << ", " << runningMean[1] << std::endl;
@@ -39,6 +38,7 @@ int main() {
     // Subspace iteration (power method) to extract eigenvectors
     float pc1[dimensions] = {1.0f, 0.0f};
     float pc2[dimensions] = {0.0f, 1.0f};
+
     for (int iter = 0; iter < 200; ++iter) {
         subspaceIteration(runningCov, dimensions, pc1, pc2);
     }

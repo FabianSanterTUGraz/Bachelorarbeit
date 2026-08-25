@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -31,35 +32,43 @@ void writeData(std::string filePath, std::vector<float> fileToWrite, bool append
     MyFile.close();
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     std::vector<float> writeToFile;
     std::cout << "Real time anomaly detection...." << std::endl;
-    std::string fileInput = "evaluation_reduced";
+    //std::string fileInput = "19 - m1_mechanically_imbalanced_load_0.5Nm_m2_mechanically_imbalanced_on_background_half_speed";
+    std::string fileInput = argv[4];
     std::string absolutePath = "Data/" + fileInput + ".csv";
     streamData DataStream(absolutePath);
     std::string line;
 
     // Time-delay embedding parameters.
-    const int dimensions = 15;   // number of embedding dimensions
-    const int tau = 1;         // delay between successive embedding coordinates
-    const int windowSize = 20000; // length of the sliding window buffer
+    const int dimensions = std::stoi(argv[1]); // number of embedding dimensions
+    int tau = std::stoi(argv[2]);        // delay between successive embedding coordinates
+    const int windowSize = std::stoi(argv[3]); // length of the sliding window buffer
 
-    float slidingWindow[windowSize] = {0.0f}; // raw streaming values
-    float tde[dimensions] = {0.0f};           // current time-delay embedding vector
+    float slidingWindow[windowSize]; // raw streaming values
+    std::fill(slidingWindow, slidingWindow + windowSize, 0.0f);
+    float tde[dimensions];           // current time-delay embedding vector
+    std::fill(tde, tde + dimensions, 0.0f);
 
     // Precompute the sliding-window offsets used to build each embedding.
     int tdeIndexes[dimensions];
     embeddingIndexes(tdeIndexes, windowSize, dimensions, tau);
 
     // Incrementally updated statistics for streaming PCA.
-    float runningMean[dimensions] = {0.0f};
-    float runningCov[dimensions * dimensions] = {0.0f};
-    float runningScatter[dimensions * dimensions] = {0.0f};
+    float runningMean[dimensions];
+    std::fill(runningMean, runningMean + dimensions, 0.0f);
+    float runningCov[dimensions * dimensions];
+    std::fill(runningCov, runningCov + dimensions * dimensions, 0.0f);
+    float runningScatter[dimensions * dimensions];
+    std::fill(runningScatter, runningScatter + dimensions * dimensions, 0.0f);
 
     // Top two principal components (eigenvectors) of the embedding.
-    float principalComponent1[dimensions] = {0.0f};
-    float principalComponent2[dimensions] = {0.0f};
+    float principalComponent1[dimensions];
+    std::fill(principalComponent1, principalComponent1 + dimensions, 0.0f);
+    float principalComponent2[dimensions];
+    std::fill(principalComponent2, principalComponent2 + dimensions, 0.0f);
 
     // Initialize the components to the identity basis vectors.
     principalComponent1[0] = 1.0f;
@@ -85,6 +94,16 @@ int main()
             writeToFile.push_back(outX);
             writeToFile.push_back(outY);
         }
+    }
+
+    std::cout << "\nFinal covariance matrix (top-left 3x3 corner):" << std::endl;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            std::cout << runningCov[i * dimensions + j] << " ";
+        }
+        std::cout << std::endl;
     }
 
     std::string outputPath = "output/output.txt";
