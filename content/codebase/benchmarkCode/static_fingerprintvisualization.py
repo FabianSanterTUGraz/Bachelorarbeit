@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 from sklearn.decomposition import PCA
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_PATH = os.path.join(SCRIPT_DIR, "..", "code", "Data", "19 - m1_mechanically_imbalanced_load_0.5Nm_m2_mechanically_imbalanced_on_background_half_speed.csv")
+DATA_PATH = os.path.join(SCRIPT_DIR, "..", "code", "Data", "temperature_dataset.csv")
 BENCHMARK_RESULTS_PATH = os.path.join(SCRIPT_DIR, "data", "benchmarkResults.txt")
 STATIC_RESULT_PLOT_PATH = os.path.join(SCRIPT_DIR, "data", "StaticResult.png")
 
