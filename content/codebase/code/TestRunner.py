@@ -33,16 +33,17 @@ def plot_output(png_path, title):
 
 results = []
 tau = 1
+d = 15
 DATASETS = {
-    "healty(2)":  "02 - m1_load_0.5Nm_half_speed",
+    "dataset2":"99 - duplicated_test",
 }
 
-for windowSize in [102910,151017]:#,15000,100000]:
-    for d in [15,20]:
+
+for windowSize in [150374]:#,102910,100000]:
         for label, fileName in DATASETS.items():
             subprocess.run(["./anomaly_detection.exe", str(d), str(tau), str(windowSize), str(fileName)])
 
             png_path = os.path.join(OUTPUT_DIR, f"output_{label}_d{d}_tau{tau}_w{windowSize}.png")
-            plot_output(png_path, f"TDE {label} d={d} tau={tau} w={windowSize}")
+            plot_output(png_path, f"online-TDE")
 
 print(results)

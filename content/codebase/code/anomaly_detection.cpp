@@ -47,8 +47,7 @@ int main(int argc, char* argv[])
     int tau = std::stoi(argv[2]);        // delay between successive embedding coordinates
     const int windowSize = std::stoi(argv[3]); // length of the sliding window buffer
 
-    float slidingWindow[windowSize]; // raw streaming values
-    std::fill(slidingWindow, slidingWindow + windowSize, 0.0f);
+    std::vector<float> slidingWindow(windowSize, 0.0f); // raw streaming values
     float tde[dimensions];           // current time-delay embedding vector
     std::fill(tde, tde + dimensions, 0.0f);
 
@@ -87,7 +86,7 @@ int main(int argc, char* argv[])
         }
         float value = std::stof(line);
 
-        if (processNewDataPoint(value, tde, slidingWindow, runningMean, runningCov, runningScatter,principalComponent1,
+        if (processNewDataPoint(value, tde, slidingWindow.data(), runningMean, runningCov, runningScatter,principalComponent1,
                                 principalComponent2, tdeIndexes, windowSize, dimensions,
                                 &outX, &outY) != 1)
         {
