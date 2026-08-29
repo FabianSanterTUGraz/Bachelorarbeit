@@ -4,7 +4,7 @@
 The original offline implementation was written in Python and focuses on two core functions. \\
 The time delay embedding function takes a 1D input signal (as a NumPy array) and the parameters $d$ (embedding dimension), $\tau$ (time delay), and $s$ (stride or window step size). By default tau and stride is set to one. The function uses a multidimensional array to store the individual windows of length d-Dimensions. The tau enforces the step size between the elements in each window larger than tau and spreads the window further apart in time.
 Stride determines how many samples to move forward before creating the next window. A larger stride results in fewer output points.
-As shown in the supplemental material, larger values for $\tau$ and s result in a thinner point cloud while the overall circular structure remains.  (\cite{Supplemental_document}, p.3). \\
+As shown in the supplemental material, larger values for $\tau$ and s result in a thinner point cloud while the overall circular structure remains\parencite{Supplemental_document}. \\
 The plot embedding function takes an subplot, the multidimensional array from the time delay embedding function TDE and an title, which is per default "TDE", as parameters.
 For the PCA, the scikit-learn python library is used. The PCA function essentially reduces the given TDE output from its d-Dimensions to two dimensions. Then, in the next step, the scores which are the distances of each point from the origin are calculated. These euclidean distances from the origin are normalized to the range [0, 1], and the points are plotted with colors mapped to their normalized distances.
 The resulting plot is saved as "tde.png" in the current root directory.

@@ -1,18 +1,22 @@
 \chapter*{Abstract}\label{cha:abstract}
-This is a placeholder for the abstract. It summarizes the whole thesis
-to give a very short overview. Usually, this the abstract is written
-when the whole thesis text is finished.
-
 Aufgaben: Max. 1 Seite
-
 Eine der Funktionen des Abstract deiner Bachelorarbeit ist, dass der Leser einschätzen kann, ob der Inhalt deiner Arbeit für ihn interessant ist. Du beantwortest im Abstract vier Fragen:
 Was ist das Thema?
 Was wurde untersucht?
 Was ist das Ergebnis?
 Was bedeuten deine Ergebnisse?\\
 
-The thesis investigates the combination of three individual concepts: time delay embedding, principle component analysis and sliding window techniques. The aim is to transform an offline algorithm for vibration signal analysis into an efficient real-time streaming version. The overall goal is to develop an incremental computation approach for principle component analysis that reuses previously calculated values rather than calculating everything from scratch over and over again, thereby reducing computational overhead. Building on the work of \cite{rakuschek2025visual}, the original offline algorithm is extended into an incremental, online implementation which is able to process continuous data streams and use the incremental principle component analysis on this data.
-The resulting product, written in C, is designed for straightforward integration into existing systems that require principle component analyis on streaming data.
+As industrial machines produce an increasing amount of sensor data and rely on this it for predictive maintenance, the need for a dedicated framework to visualize the individual vibration measurements becomes increasingly important.\\ 
+The combination of three individual concepts: time delay embedding, principle component analysis and sliding windows offers a powerful way of transforming raw vibration data into visually interpretable plots that reveal the structural changes triggered by mechanical faults. 
+Existing offline implementations require the full signal history prior to computation and must recompute the covariance matrix and its eignedecomposition from scratch each time new observations arrives. \\
+This thesis investigates wether an incremental, streaming version algorithm can preserve the diagnostic quality of the original method while reducing the computational overhead. The goal is to determine how time delay embedding, principal component analysis and the sliding window mechanism can be combined to support continuous, memory bounded processing of vibration data in real time.
+Starting from the offline algorithm designed by \textcite{rakuschek2025visual}, the objective is to implement a C-based library that maintains running statistics,covariance matrix and dominant eigenvectors so that each incoming sample updates the existing principal components rather than triggering a full recomputation.\\
+The resulting implementation is validated by comparing its produced values against a reference computation and evaluated on a vibration dataset comparing the plots produced by the incremental method to those of the original offline counterpart. Also the resulting plot quality under different settings like window size and other parameters is analyzed. \\
+
+//hier noch ein paar kurze sätze zu den results sobald ich fertig habe \\
+
+
+\textbf{Keywords}: Principal component analysis, sliding window, time delay embeddings, streaming data, incremental principal component analysis, real-time anomaly detection, vibration data.
 
 \newpage\null\thispagestyle{empty}\newpage
 

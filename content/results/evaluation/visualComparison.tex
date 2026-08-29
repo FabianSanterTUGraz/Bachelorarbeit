@@ -1,0 +1,15 @@
+\subsection{Visual comparison}
+An additional evaluation step is that the implementation is compared against the static, offline approach introduced by \cite{rakuschek2025visual}. To ensure a one to one comparison, the sliding window size is set to span the entire length of the input sequence, rather than small fixed size windows. Using smaller windows would cause the algorithm to operate in a steady mode throwing away older samples as the window slides which would cause the resulting covariance estimate to only the most recent observations rather than the input as a whole. Additionally a large input sequence has to be chosen for comparison, since as discussed in Section \ref{section:Against reference data} the subspace iteration needs a sufficient  number of samples for converging to a stable solution. By using a short input the offline algorithm would be compared to a non yet converged estimation of principal components. 
+The comparison is executed on dataset [name] from the dataset which can be found in the Appendix \ref{app:dataset_description} which holds a total of [N] samples. The sliding window size is set accordingly to the sample size to ensure that the whole dataset is fetched at once. The time delay embedding is set to $\tau = 1$ and dimensions $d = 15$ matching the reference implementation to ensure that both implementations operate on identical vectors. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{figures/comparison_output_dataset2_d15_tau1_w102909.png}
+\caption{Principle component analysis applied on non periodic data.}
+\label{fig:tdeHealty}
+\end{figure}
+
+
+
+
+19vs19 (151.017)
+27vs27  (111.000)
