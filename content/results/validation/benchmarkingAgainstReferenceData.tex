@@ -1,4 +1,5 @@
 \subsection{Benchmarking against Reference Data}
+\label{section:Against reference data}
 To validate the implementation the tutorial by \cite{CheckForCorectness} is used as a reference, as it provides a full computation of an principal component analysis based on a small, deterministic dataset. The output of the incremental principal component analysis is compared step by step against the values reported in this reference. The sliding window is configured to span the entire input dataset $w = 10$, the embedding dimension is set to $d =2$, corresponding to the two-dimensional input data and the time delay is set ti $\tau = 0$ since the reference example does not involve any temporal lag.
 \begin{figure}[htbp]
   \centering
@@ -43,45 +44,62 @@ To validate the implementation the tutorial by \cite{CheckForCorectness} is used
   \caption{PCA reference dataset: original values (left) and mean-adjusted values (right) from the validation data.}
   \label{fig:pca_example_data}
 \end{figure}
-
-Test
-
-\begin{equation}
-cov = \begin{pmatrix}
-.616555556 & .615444444 \\
-.615444444 & .716555556
-\end{pmatrix}
-\end{equation}
-
-and the corresponding eigenvectors and eigenvalues: 
-\begin{equation}
-eigenvalues = \begin{pmatrix}
-.0490833989 \\
-1.28402771
-\end{pmatrix}
-eigenvectors = \begin{pmatrix}
--.735178656 & -.677873399 \\
-.677873399 & -.735178656
-\end{pmatrix}
-\end{equation}
+The reference tutorial doesn't use a time delay embedding or a sliding window approach, a clean comparison setup is proposed for validation purposes. The setup enables a direct, one to one comparison comparison of the individual algorithm steps of the implementation. The first steps to be compared are the incremental mean and covariance computation. The resulting deltas in the matrix in comparison are: 
 \begin{table}[htbp]
 \centering
-\[
-\begin{array}{c}
-x \\
-\hline
--.827970186 \\
-1.77758033 \\
--.992197494 \\
--.274210416 \\
--1.67580142 \\
--.912949103 \\
-.0991094375 \\
-1.14457216 \\
-.438046137 \\
-1.22382056
-\end{array}
-\]
-\caption{The resulting data using only the most significant eigenvectors.}
-\label{tab:pca_transformed}
+\begin{tabular}{lrrr}
+\toprule
+Quantity & Reference & Own Implementation & Absolute Difference \\
+\midrule
+Mean $x$          & 1.81         & 1.81      & $0$ \\
+Mean $y$          & 1.91         & 1.91      & $0$ \\
+$C_{11}$          & 0.616555556  & 0.616556  & $4.44 \times 10^{-7}$ \\
+$C_{12} = C_{21}$ & 0.615444444  & 0.615444  & $4.44 \times 10^{-7}$ \\
+$C_{22}$          & 0.716555556  & 0.716555  & $5.56 \times 10^{-7}$ \\
+\bottomrule
+\end{tabular}
+\caption{Comparison of the mean vector and covariance matrix computed by the proposed implementation against the reference values.}
+\label{tab:mean_cov_comparison}
+\end{table}
+The comparison shows a really small deviation between the reference result $\text{cov}_{\text{ref}}$ and the result of the comparison $\text{cov}_{\text{test}}$
+
+In contrast to the reference tutorial, which calculates the eignedecomposition of the covariance matrix directly, the implementation extracts the the two principal components with subspace iteration, which is an iterative method that converges to the true eigenvector after a minimum numbers of iteration. Since the used dataset is too small to trigger converging, the subspace iteration is executed repeatedly on the same covariance matrix until the resulting eigenvectors stabilize. A single iteration step per incoming samples as in the actual streaming data use case would produce extremely high deltas in the output. When the subspace iteration stabilizes after 200 iterations the resulting deltas are:  
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+Quantity & Reference & Own Implementation (sign-corrected) & Absolute Difference \\
+\midrule
+$u_{1,x}$ & 0.735178656  & 0.735179  & $3.44 \times 10^{-7}$ \\
+$u_{1,y}$ & 0.677873399  & 0.677873  & $3.99 \times 10^{-7}$ \\
+$u_{2,x}$ & 0.677873399  & 0.677873  & $3.99 \times 10^{-7}$ \\
+$u_{2,y}$ & -0.735178656 & -0.735179 & $3.44 \times 10^{-7}$ \\
+\bottomrule
+\end{tabular}
+\caption{Comparison of the converged principal components (eigenvectors), sign-corrected due to the inherent sign ambiguity of eigenvectors.}
+\label{tab:eigenvector_comparison}
+\end{table}
+
+Finally, the adjusted data is projected onto the converged principal component with the largest eigenvalue. When comparing the results from the tutorial to the implementation the following are the results. 
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{rrrr}
+\toprule
+Reference $x$ / $y$ & Own Implementation $x$ / $y$ & Abs. Diff. $x$ & Abs. Diff. $y$ \\
+\midrule
+-0.827970186 / -0.175115307 & -0.827970 / -0.175115 & $2.0 \times 10^{-7}$ & $1.4 \times 10^{-7}$ \\
+ 1.777580330 /  0.142857227 &  1.777580 /  0.142857 & $3.3 \times 10^{-7}$ & $2.3 \times 10^{-7}$ \\
+-0.992197494 /  0.384374989 & -0.992198 /  0.384375 & $5.1 \times 10^{-7}$ & $1.1 \times 10^{-7}$ \\
+-0.274210416 /  0.130417207 & -0.274211 /  0.130417 & $5.8 \times 10^{-7}$ & $2.1 \times 10^{-7}$ \\
+-1.675801420 / -0.209498461 & -1.675800 / -0.209498 & $1.4 \times 10^{-6}$ & $4.6 \times 10^{-7}$ \\
+-0.912949103 /  0.175282444 & -0.912949 /  0.175283 & $1.0 \times 10^{-7}$ & $5.6 \times 10^{-7}$ \\
+ 0.099109438 / -0.349824698 &  0.099109 / -0.349825 & $1.4 \times 10^{-7}$ & $3.0 \times 10^{-7}$ \\
+ 1.144572160 /  0.046417258 &  1.144570 /  0.046417 & $1.6 \times 10^{-6}$ & $1.4 \times 10^{-7}$ \\
+ 0.438046137 /  0.017764630 &  0.438046 /  0.017765 & $1.4 \times 10^{-7}$ & $7.0 \times 10^{-8}$ \\
+ 1.223820560 / -0.162675287 &  1.223820 / -0.162675 & $5.6 \times 10^{-7}$ & $2.9 \times 10^{-7}$ \\
+\bottomrule
+\end{tabular}
+\caption{Comparison of the projected principal component scores between the reference and the proposed implementation, sign-corrected due to the inherent sign ambiguity of the underlying eigenvectors.}
+\label{tab:scores_comparison}
 \end{table}

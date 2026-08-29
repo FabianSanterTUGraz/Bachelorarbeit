@@ -1,4 +1,4 @@
-\subsection{Visual comparison}
+\subsection{Time plot compared with fingerprints}
 Conventional time series representations of vibration signals and highly clustered data in general tend to suffer from over-plotted when high-frequency noise is observed over a extended time period. As shown in Figure \ref{fig:BadExample}, high sampling rates compress the signal into an high-density amplitude block. The result is that phase shifts and harmonic distortions remain visually hidden consequently making it unsuitable for condition monitoring. 
 \begin{figure}[H]
 \centering
@@ -7,17 +7,10 @@ Conventional time series representations of vibration signals and highly cluster
 \label{fig:BadExample}
 \end{figure}
 In contrast, transforming the data into a Time Delay Embedding phase space produces a highly compact visually informative fingerprint.Figure \ref{fig:tdeHealty} shows the baseline fingerprint under healthy normal operating conditions, generated with the algorithm described in Section \ref{section:OriginalImplementation} 
-A healthy fingerprint is characterized by signal periodicity, which "results in elliptical structures and 'round' point cloud shapes" \cite{rakuschek2025visual}. Furthermore, "noise accumulates near the center while vibrations cause the circular patterns with a larger radius than noise," with these circular structures persisting even under high noise levels \cite{rakuschek2025visual}.
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.5\textwidth]{figures/tdeVisual.png}
-\caption{Example of a faulty fingerprint from a machine running in presence of mechanical imbalance at shaft.}
-\label{fig:tdeBadExample}
-\end{figure}
+A healthy fingerprint is characterized by signal periodicity, which ``results in elliptical structures and `round' point cloud shapes'' \parencite[p.~X]{rakuschek2025visual}.Furthermore, ``noise accumulates near the center while vibrations cause the circular patterns with a larger radius than noise'' \parencite[p.~X]{rakuschek2025visual}, with these circular structures persisting even under high noise levels.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{figures/healtyFingerprint.png}
 \caption{Example of a fingerprint under no faulty conditions.}
 \label{fig:tdeHealty}
 \end{figure}
-Comparing the faulty fingerprint in Figure\ref{fig:tdeBadExample} with the healthy baseline in Figure \ref{fig:tdeHealty} shows distinct geometric distortions. For instance in figure \ref{fig:BadExample} a mechanical shaft imbalance wraps the phase trajectory into an asymmetric pattern while the healthy fingerprint shows a clean and periodic shape. 

@@ -14,7 +14,7 @@ The covariance matrix $S$is then computed as:
 \begin{equation}
 \mathbf{S} = \frac{1}{n-1} \tilde{\mathbf{X}}^T \tilde{\mathbf{X}}
 \end{equation}
-The resulting covariance matrix $C$ quantifies how each pair of embedded variables varies together. By performing an eigen-decomposition of the covariance matrix it yields its eigenvalues $\lambda_1 ,\lambda_2....\lambda_d$ and corresponding eigenvectors $\mathbf{u}_1, \mathbf{u}_2, \dots, \mathbf{u}_d$, where each one of the eigenvalues $\lambda$ represents the variance captured along its its associated principal component(\cite{rencher2002methods}, p.382).
+The resulting covariance matrix $C$ quantifies how each pair of embedded variables varies together. By performing an eigen-decomposition of the covariance matrix it yields its eigenvalues $\lambda_1 ,\lambda_2....\lambda_d$ and corresponding eigenvectors $\mathbf{u}_1, \mathbf{u}_2, \dots, \mathbf{u}_d$, where each one of the eigenvalues $\lambda$ represents the variance captured along its its associated principal component\parencite[p.~382]{rencher2002methods}.
 The resulting principal components scores represent the transformed data coordinates in the new orthogonal space are calculated by projecting the centered TDE data matrix $\tilde{X}$ onto the matrix of eigenvectors $\mathbf{U} = [\mathbf{u}_1, \mathbf{u}_2, \dots, \mathbf{u}_d]$:
 \begin{equation}
 \mathbf{Z} = \tilde{\mathbf{X}}\mathbf{U}
