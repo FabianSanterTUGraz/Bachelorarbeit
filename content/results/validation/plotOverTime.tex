@@ -1,3 +1,12 @@
 \subsection{Plottin over time}
 \label{section:plotOverTime}
 As addressed in chapter \ref{section:VisualComparison} the one to one comparison between an healty and faulty fingerprint does not give a exact insight over the current status of the machine. Because of that plotting over time with the online principal component analysis is tested by keeping small windows and stop the routine and plot the result after n,n and n iteraations therby also proofing the incremental property of the algorythm.
+the amount of active embedding vectors in the window should be significantly larger than the dimension $d$ else the covariance esimation is populated with too much noise as a guideline the window size should be roughtly the 20-50 times as much as d. That means with a dimension of 15 the window size should be >= 300-750. The desision fell on a window size of 3000 to be rally sure to give the algorythm enougth samples to converge and still have a lot of iterations left to test the procedure. Also a snapshot after 1500 iterations was made to show that the plot is still noisy. For the reason that all datasets present represent stationary fails witch do not occure after some time dataset 02 and 05 which represent the same motor running with mechanical load only that 05 has a mechanical fault are split down the middle and combined into one coherent dataset to simulate a fault after some time. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{figures/fingerprintWithHistogramm.png}
+\caption{Principle component analysis applied on dataset 02,with 102909 data points.}
+\label{fig:tdeVisualComparison02}
+\end{figure}
+
+02 mit 05 kombinieren weil es der gleiche motor ist mit last einmal heanlty einmal faulty
