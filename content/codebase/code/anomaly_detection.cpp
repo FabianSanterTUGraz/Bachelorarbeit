@@ -77,6 +77,9 @@ int main(int argc, char* argv[])
     float outX = 0.0f;
     float outY = 0.0f;
 
+    int iteration = 0;
+    std::string outputPath = "output/output";
+
     while (DataStream.hasNext())
     {
         DataStream.next(line);
@@ -93,19 +96,13 @@ int main(int argc, char* argv[])
             writeToFile.push_back(outX);
             writeToFile.push_back(outY);
         }
-    }
-
-    std::cout << "\nFinal covariance matrix (top-left 3x3 corner):" << std::endl;
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            std::cout << runningCov[i * dimensions + j] << " ";
+        iteration++;
+        if(iteration == 1500 || iteration == 20000 || iteration == 40000 || iteration == 60000 || iteration == 80000 || iteration == 100000){
+            writeData(outputPath + std::to_string(iteration) + ".txt", writeToFile, false);
         }
-        std::cout << std::endl;
-    }
 
-    std::string outputPath = "output/output.txt";
-    writeData(outputPath, writeToFile, false);
+    }
+    //std::string outputPath = "output/output.txt";
+    //writeData(outputPath, writeToFile, false);
     return 0;
 }

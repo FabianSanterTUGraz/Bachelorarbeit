@@ -35,15 +35,16 @@ results = []
 tau = 1
 d = 15
 DATASETS = {
-    "dataset2":"11 - m1_mechanically_imbalanced_electrically_50_ohm_fault_half_speed",
+    "dataset2":"dataset_01_03_combined",
 }
 
+windowSize = 3000
 
-for windowSize in [150374]:#,102910,100000]:
-        for label, fileName in DATASETS.items():
-            subprocess.run(["./anomaly_detection.exe", str(d), str(tau), str(windowSize), str(fileName)])
 
-            png_path = os.path.join(OUTPUT_DIR, f"output_{label}_d{d}_tau{tau}_w{windowSize}.png")
-            plot_output(png_path, f"online-TDE")
+for label, fileName in DATASETS.items():
+    subprocess.run(["./anomaly_detection.exe", str(d), str(tau), str(windowSize), str(fileName)])
+
+    png_path = os.path.join(OUTPUT_DIR, f"output_{label}_d{d}_tau{tau}_w{windowSize}.png")
+
 
 print(results)
