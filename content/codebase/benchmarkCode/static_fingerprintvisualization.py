@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 from sklearn.decomposition import PCA
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_PATH = os.path.join(SCRIPT_DIR, "..", "code", "Data", "02 - m1_load_0.5Nm_half_speed.csv")
+DATA_PATH = os.path.join(SCRIPT_DIR, "..", "code", "Data", "11 - m1_mechanically_imbalanced_electrically_50_ohm_fault_half_speed.csv")
 BENCHMARK_RESULTS_PATH = os.path.join(SCRIPT_DIR, "data", "benchmarkResults.txt")
 STATIC_RESULT_PLOT_PATH = os.path.join(SCRIPT_DIR, "data", "StaticResult.png")
 
@@ -30,7 +30,7 @@ def time_delay_embedding(values, d, tau=1, stride=1):
         index += stride
     return np.array(windows)
 
-def plot_embedding(ax, tde, title="TDE", benchmark_results_path=BENCHMARK_RESULTS_PATH):
+def plot_embedding(ax, tde, title="offline-TDE", benchmark_results_path=BENCHMARK_RESULTS_PATH):
     pca = PCA(n_components=2,svd_solver="full")
     projected = pca.fit_transform(tde)
 
@@ -60,7 +60,8 @@ def plot_embedding(ax, tde, title="TDE", benchmark_results_path=BENCHMARK_RESULT
     ax.set_title(title, fontsize=30)
 
 
-values = np.loadtxt(DATA_PATH, skiprows=1, max_rows=102909)
+values = np.loadtxt(DATA_PATH, skiprows=1)
+print(f"Loaded {len(values)} samples -> use this exact number as windowSize for the dynamic run")
 
 # Input: values.npy as a 1D numpy array, ideally a vibration
 fig, ax = plt.subplots(figsize=(7, 7))

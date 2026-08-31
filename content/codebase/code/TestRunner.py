@@ -35,7 +35,7 @@ results = []
 tau = 1
 d = 15
 DATASETS = {
-    "dataset2":"99 - duplicated_test",
+    "dataset2":"11 - m1_mechanically_imbalanced_electrically_50_ohm_fault_half_speed",
 }
 
 
