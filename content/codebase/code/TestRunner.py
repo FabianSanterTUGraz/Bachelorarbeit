@@ -30,21 +30,16 @@ def plot_output(png_path, title):
     plt.show()
     plt.close(fig)
 
-
-results = []
-tau = 1
-d = 15
 DATASETS = {
-    "dataset2":"dataset_01_03_combined",
+    "Dataset01":"01 - m1_half_shaft_speed_no_mechanical_load",
 }
 
-windowSize = 3000
+windowSize = 2000
+d = 13
 
+for tau in [1,2,4,13]:
+    for label, fileName in DATASETS.items():
+        subprocess.run(["./anomaly_detection.exe", str(d), str(tau), str(windowSize), str(fileName)])
+        png_path = os.path.join(OUTPUT_DIR, f"output_{label}_d{d}_tau{tau}_w{windowSize}.png")
+        plot_output(png_path, f"w = {windowSize} d = {d} tau = {tau}")
 
-for label, fileName in DATASETS.items():
-    subprocess.run(["./anomaly_detection.exe", str(d), str(tau), str(windowSize), str(fileName)])
-
-    png_path = os.path.join(OUTPUT_DIR, f"output_{label}_d{d}_tau{tau}_w{windowSize}.png")
-
-
-print(results)

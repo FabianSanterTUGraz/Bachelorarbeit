@@ -77,9 +77,6 @@ int main(int argc, char* argv[])
     float outX = 0.0f;
     float outY = 0.0f;
 
-    int iteration = 0;
-    std::string outputPath = "output/output";
-
     while (DataStream.hasNext())
     {
         DataStream.next(line);
@@ -96,13 +93,8 @@ int main(int argc, char* argv[])
             writeToFile.push_back(outX);
             writeToFile.push_back(outY);
         }
-        iteration++;
-        if(iteration == 1500 || iteration == 20000 || iteration == 40000 || iteration == 60000 || iteration == 80000 || iteration == 100000){
-            writeData(outputPath + std::to_string(iteration) + ".txt", writeToFile, false);
-        }
-
     }
-    //std::string outputPath = "output/output.txt";
-    //writeData(outputPath, writeToFile, false);
+    std::string outputPath = "output/output.txt";
+    writeData(outputPath, writeToFile, false);
     return 0;
 }
