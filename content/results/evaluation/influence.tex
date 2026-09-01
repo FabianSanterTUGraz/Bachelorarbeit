@@ -1,3 +1,32 @@
 \subsection{Influence of parameter choices on the resulting fingerprint}
 \label{section:influenceOfParameters}
-The choice of parameters is a crucial decision for the quality of the resulting fingerprint plot. The main parameters which influence the outcome are window size $w$, the time delay tau $\tau$ and the embedding dimension $d$. The goal is to find out how these parameters influence the resulting visualization and to identify which settings produce plots with maximal information content and clear visual distinction between normal and distorted vibration patterns. 
+To test the influence of the parameters embedding dimension $d$, window size $W$ and time delay $\tau$ the incremental principal component analysis algorithm is applied on dataset 01 and benchmarked across a set of different parameter values.
+The goal is to find out how these parameters influence the resulting visualization and to identify which settings produce plots with maximal information content and clear visual distinction between normal and distorted vibration patterns. According to \textcite{rakuschek2025visual} the clearest elliptical structure is produced when $(d - 1) * \tau$ is chosen to be approximately the same as the period duration. The dominant frequency in the dataset is 44.54 Hz and with that the optimal period length is 12 values. 
+\begin{figure}[htbp]
+    \centering
+    \begin{adjustwidth}{-2cm}{-2cm}  % je 2cm links und rechts in den Rand hinein
+        \centering
+        \includegraphics[width=\linewidth]{figures/differentDResult.png}
+    \end{adjustwidth}
+    \caption{Influence of the parameter d on the fingerprint plot.}
+    \label{fig:expA-dimension}
+\end{figure}
+The plotting on different dimension $d$ shows that indeed the best value has to produce a 1 times to 2 times the optimal value of the optimal period length. 
+\begin{figure}[htbp]
+    \centering
+    \begin{adjustwidth}{-2cm}{-2cm}  % je 2cm links und rechts in den Rand hinein
+        \centering
+        \includegraphics[width=\linewidth]{figures/differentWindowsResult.png}
+    \end{adjustwidth}
+    \caption{Influence of the parameter d on the fingerprint plot.}
+    \label{fig:expA-dimension}
+\end{figure}
+\begin{figure}[htbp]
+    \centering
+    \begin{adjustwidth}{-2cm}{-2cm}  % je 2cm links und rechts in den Rand hinein
+        \centering
+        \includegraphics[width=\linewidth]{figures/differentTauResults.png}
+    \end{adjustwidth}
+    \caption{Influence of the parameter d on the fingerprint plot.}
+    \label{fig:expA-dimension}
+\end{figure}
