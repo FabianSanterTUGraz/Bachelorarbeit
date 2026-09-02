@@ -1,9 +1,9 @@
 \chapter{Implementation}
-This chapter introduces the software architecture and implementation of the real-time anomaly detection algorithm. It goes into detail how the transition from an offline implementation to an real time system works. A outline of the core mathematical optimizations, data structures and the application programming interface (API) is given for modular software integration. 
+This chapter introduces the software architecture and implementation of the real-time anomaly detection algorithm. It specifies the details on how the transition from the offline implementation to the streaming approach was done. Also a outline of the core mathematical optimizations, data structures and the application programming interface (API) is given for modular software integration. 
 \input{content/chapter4/Architecture}
 \input{content/chapter4/IncrementalPCA}
 \input{content/chapter4/SlidingWindow}
 \input{content/chapter4/TDE}
 \input{content/chapter4/CodeIntegration}
 \section{Summary}
-This chapter detailed the realization of the transition from type 1 to type 2 algorithm. This was achieved by combining time delay embedding, principal component analysis and a sliding window approach . Standard library utilities and programming language-specific features where deliberately avoided to ensure maximum portability to ensure seamless integration across all C language family members.
+This chapter was the main core of the thesis and detailed the realization of the transition of the algorithm from type 1 to type 2. This was achieved by combining time delay embedding, principal component analysis and a sliding windows. Standard libraries and programming language specific features where avoided to ensure maximum portability and to enable seamless integration across all C language family members.

@@ -1,5 +1,5 @@
 \subsection{Matrices and Vectors}
-Do to the constrain that the implementation should be able to be used in all c-family with minimal changes the source code build in vectors should not be used. 
+Do to the constrain that the implementation should be able to be used in all c-family with minimal changes the source code build in vectors or similar data structures should not be used. 
 Instead, multidimensional matrices and state vectors are represented as contiguous 1D flat arrays. This design ensures consistent memory layouts across execution environments while simplifying low-level pointer arithmetic and dynamic memory management.
 \lstinputlisting[
   language=C,
