@@ -1,5 +1,5 @@
 \section{Integration time delay embedding vectors}
-To improve runtime computational overhead, the indexes offsets required for time-delay embeddings are precomputed once during initialization instead than recalculated from scratch at each streaming step. The embeddingIndexes function calculates these index positions based on the specified embedding dimensions and time lag paramenter tau. 
+To reduce runtime computational overhead, the indexes offsets required for time-delay embeddings are precomputed once during initialization instead recalculating them from scratch at each streaming step. The embeddingIndexes function calculates these index positions based on the specified embedding dimensions and time lag parameter tau. 
 \lstinputlisting[
   language=C,
   caption={All variables needed to call the algorythm},
@@ -8,7 +8,7 @@ To improve runtime computational overhead, the indexes offsets required for time
   firstline=30,
   lastline=38
 ]{content/codebase/code/src/AnomalyDetection.c}
-These index mappings remain constant trough execution and they are reused across all following iterations. Using these precomputed indexes, the embedding function extracts the corresponding values directly from the sliding window buffer so construct the current embedding vector.
+These index mappings remain constant trough execution and they are reused across all following iterations. Using these precomputed indexes, the embedding function extracts the corresponding values directly from the sliding window buffer to construct the current embedding vector.
 \lstinputlisting[
   language=C,
   caption={All variables needed to call the algorythm},

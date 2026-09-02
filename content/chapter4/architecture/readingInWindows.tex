@@ -1,6 +1,6 @@
 \subsection{Sliding window with streaming data}
 \label{section:SlidingWindowWithStreamingData}
-To process continuous time-series streams in real time, a sliding window of fixed capacity $N_{\text{window}}$ is maintained in memory. As the data stream yields new scalar values, the sliding window buffer is updated incrementally.\\ \\
+To process continuous time-series streams in real time, a sliding window of fixed capacity $N_{\text{window}}$ is maintained in memory. As the data stream reads in new values, the sliding window buffer is updated incrementally.\\ \\
 \lstinputlisting[
   language=C,
   caption={Sliding the observation window as incoming data accumulates.},
@@ -9,4 +9,4 @@ To process continuous time-series streams in real time, a sliding window of fixe
   firstline=21,
   lastline=28
 ]{content/codebase/code/src/AnomalyDetection.c}
-During each iteration of the main loop, the window state is shifted to the right by one position via \texttt{slideWindow()}, forgetting the oldest sample at index 0 and appending the newest stream value to the terminal index $N_{\text{window}} - 1$. Adjusting the window size parameter directly controls the historical sample memory, allowing straightforward evaluation of parameter sensitivity on time-delay embedding (TDE) and covariance stability.
+During each iteration of the main loop, the window state is shifted to the right by one position via \texttt{slideWindow()}, forgetting the oldest sample at index 0 and appending the newest stream value to the terminal index $N_{\text{window}} - 1$. Adjusting the window size parameter directly controls the historical sample memory, allowing straightforward evaluation of parameter sensitivity on time delay embedding and covariance stability.

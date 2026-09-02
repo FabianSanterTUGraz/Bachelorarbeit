@@ -1,7 +1,7 @@
 \subsection{Subspace iteration}
-Once the running covariance matrix is updated by the time delay embedding vector, the dominant feature directions are extracted to project the high dimensional point cloud onto an two-dimensional plane. Conventional Principal Component Analysis relies on full eignedecomposition which comes with a high dimensional cost of $\mathcal{O}(d^3)$ because the matrix must be reduced to diagonal form. By tracking the first two principal components $q_1$ and $q_2$ dynamically, the subspace is updated incrementally, avoiding full recomputation of the components from scratch at each iteration.
+Once the running covariance matrix is updated by the time delay embedding vector, the dominant feature directions are extracted to project the higher dimensional point cloud onto the two-dimensional plane. Conventional Principal Component Analysis relies on full eignedecomposition which comes with a high dimensional cost of $\mathcal{O}(d^3)$ because the matrix must be reduced to diagonal form. By tracking the first two principal components $q_1$ and $q_2$ dynamically, the subspace is updated incrementally, avoiding full recomputation of the components from scratch at each iteration.
 \\ \\
-To ensure that the eigenvectors signs don't get flipped by 180 degree and keep their original directions a copy of the original eigenvector is taken which is later used to touch up if necessary. 
+To ensure that the eigenvectors signs don't get flipped by 180 degree and keep their original directions a copy of the original eigenvector is taken which is later used to correct the sign if necessary. 
 \begin{equation}
     q_{1,\text{old}} = q_1^{k-1}, \quad q_{2,\text{old}} = q_2^{k-1}.
     \label{eq:old_eigenvectors}
@@ -30,4 +30,5 @@ Also the second principal component has to be normalized the same way as in equa
     q_2^k = \frac{z_2^{\perp}}{\|z_2^{\perp}\|_2}.
     \label{eq:norm_q2}
 \end{equation}
-Finally the orientation locking is applied by comparing the resulting vectors $q_1^k$ and $q_2^k$ with with their historical versions.
+The orientation locking is applied by comparing the resulting vectors $q_1^k$ and $q_2^k$ with with their historical versions.\\
+As a last projection step the scalar product of the time delay embedding vector with each principal component is computed. Since the principal components are unit vectors the dot product returns the exact coordinates of the point along that direction which means how far the point extends along that exact principal axis. It should be noted that the time delay embedding vector was centered prior, otherwise the projection would be falsified by the mean value o the data.
