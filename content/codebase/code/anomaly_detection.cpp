@@ -5,7 +5,6 @@
 
 #include "include/streamingData.hpp"
 #include "include/AnomalyDetection.h"
-#include "include/utils.h"
 
 void writeData(std::string filePath, std::vector<float> fileToWrite, bool append = true)
 {
@@ -56,18 +55,13 @@ int main(int argc, char* argv[])
     embeddingIndexes(tdeIndexes, windowSize, dimensions, tau);
 
     // Incrementally updated statistics for streaming PCA.
-    float runningMean[dimensions];
-    std::fill(runningMean, runningMean + dimensions, 0.0f);
-    float runningCov[dimensions * dimensions];
-    std::fill(runningCov, runningCov + dimensions * dimensions, 0.0f);
-    float runningScatter[dimensions * dimensions];
-    std::fill(runningScatter, runningScatter + dimensions * dimensions, 0.0f);
+    float runningMean[dimensions] = {0.0f};
+    float runningCov[dimensions * dimensions] = {0.0f};
+    float runningScatter[dimensions * dimensions] = {0.0f};
 
     // Top two principal components (eigenvectors) of the embedding.
-    float principalComponent1[dimensions];
-    std::fill(principalComponent1, principalComponent1 + dimensions, 0.0f);
-    float principalComponent2[dimensions];
-    std::fill(principalComponent2, principalComponent2 + dimensions, 0.0f);
+    float principalComponent1[dimensions] = {0.0f};
+    float principalComponent2[dimensions] = {0.0f};
 
     // Initialize the components to the identity basis vectors.
     principalComponent1[0] = 1.0f;
