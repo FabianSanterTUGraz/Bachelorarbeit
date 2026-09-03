@@ -8,5 +8,5 @@ To process continuous time-series streams in real time, a sliding window of fixe
   firstnumber=21,
   firstline=21,
   lastline=28
-]{content/codebase/code/src/AnomalyDetection.c}
+]{content/codebase/AnomalyDetection.c}
 During each iteration of the main loop, the window state is shifted to the right by one position via \texttt{slideWindow()}, forgetting the oldest sample at index 0 and appending the newest stream value to the terminal index $N_{\text{window}} - 1$. Adjusting the window size parameter directly controls the historical sample memory, allowing straightforward evaluation of parameter sensitivity on time delay embedding and covariance stability.
