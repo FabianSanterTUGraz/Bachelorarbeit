@@ -35,20 +35,6 @@ def plot_embedding(ax, tde, title="offline-TDE", benchmark_results_path=BENCHMAR
     projected = pca.fit_transform(tde)
 
     cov_matrix = np.cov(tde, rowvar=False)
-
-    print("Covariance Matrix Shape:", cov_matrix.shape)
-    print("Top-left 3x3 corner:\n", cov_matrix[:3, :3])
-
-    # NEU: vollständige Eigenwerte berechnen und ausgeben
-    eigenvalues = np.linalg.eigvalsh(cov_matrix)
-    eigenvalues_sorted_desc = np.sort(eigenvalues)[::-1]
-    print("\nAll eigenvalues (descending):", eigenvalues_sorted_desc)
-    print("Ratio λ2/λ1:", eigenvalues_sorted_desc[1] / eigenvalues_sorted_desc[0])
-    if len(eigenvalues_sorted_desc) > 2:
-        print("Ratio λ3/λ2:", eigenvalues_sorted_desc[2] / eigenvalues_sorted_desc[1])
-
-    np.savetxt(benchmark_results_path, projected, delimiter=",", fmt="%.6f")
-
     scores = []
     for point in projected:
         scores.append(np.linalg.norm(point))

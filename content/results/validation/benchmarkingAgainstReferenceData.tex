@@ -1,6 +1,6 @@
 \subsection{Benchmarking against Reference Data}
 \label{section:Against reference data}
-To validate the implementation the tutorial by \cite{CheckForCorectness} is used as a reference, as it provides a full computation of an principal component analysis based on a small, deterministic dataset. The output of the incremental principal component analysis is compared step by step against the values reported in this reference. The sliding window is configured to span the entire input dataset $w = 10$, the embedding dimension is set to $d =2$, corresponding to the two-dimensional input data and the time delay is set ti $\tau = 0$ since the reference example does not involve any temporal lag.
+To validate the implementation the tutorial by \cite{CheckForCorectness} is used as a reference, as it provides a full computation of an principal component analysis based on a small, deterministic dataset with 10 entries. The output of the incremental principal component analysis is compared step by step against the values reported in this reference. The sliding window is configured to span the entire input dataset $w = 10$ and the embedding dimension is set to $d =2$ corresponding to the two-dimensional input data additionally the time delay is set to $\tau = 0$ since the reference example does not involve any temporal lag.
 \begin{figure}[htbp]
   \centering
   \setlength{\arraycolsep}{8pt}
@@ -35,16 +35,11 @@ To validate the implementation the tutorial by \cite{CheckForCorectness} is used
     -.31 & -.31 \\
     -.71 & -1.01
   \end{array}$
-
   \vspace{0.4cm}
-
-  % Plot graphic inclusion
-  %\includegraphics[width=0.55\textwidth]{content/figures/PCAdata.png}
-
-  \caption{PCA reference dataset: original values (left) and mean-adjusted values (right) from the validation data.}
+  \caption{Reference dataset: original values (left) and mean-adjusted values (right).}
   \label{fig:pca_example_data}
 \end{figure}
-The reference tutorial doesn't use a time delay embedding or a sliding window approach, a clean comparison setup is proposed for validation purposes. The setup enables a direct, one to one comparison comparison of the individual algorithm steps of the implementation. The first steps to be compared are the incremental mean and covariance computation. The resulting deltas in the matrix in comparison are: 
+Due to the reason that the reference tutorial doesn't use time delay embedding or a sliding window approach, a alternative comparison setup is established for validation purposes. The setup executes a direct, one to one comparison between the individual stages of the implementation and the reference calculation. As a first step the data is centered and the mean is updated accordingly. This produces values that match the reference with only small deviations in the resulting covariance matrix. 
 \begin{table}[htbp]
 \centering
 \begin{tabular}{lrrr}
@@ -61,9 +56,7 @@ $C_{22}$          & 0.716555556  & 0.716555  & $5.56 \times 10^{-7}$ \\
 \caption{Comparison of the mean vector and covariance matrix computed by the proposed implementation against the reference values.}
 \label{tab:mean_cov_comparison}
 \end{table}
-The comparison shows a really small deviation between the reference result $\text{cov}_{\text{ref}}$ and the result of the comparison $\text{cov}_{\text{test}}$
-
-In contrast to the reference tutorial, which calculates the eignedecomposition of the covariance matrix directly, the implementation extracts the the two principal components with subspace iteration, which is an iterative method that converges to the true eigenvector after a minimum numbers of iteration. Since the used dataset is too small to trigger converging, the subspace iteration is executed repeatedly on the same covariance matrix until the resulting eigenvectors stabilize. A single iteration step per incoming samples as in the actual streaming data use case would produce extremely high deltas in the output. When the subspace iteration stabilizes after 200 iterations the resulting deltas are:  
+In contrast to the reference tutorial, which calculates the eignedecomposition of the covariance matrix directly, the implementation extracts the the two principal components with subspace iteration, which is an iterative method that converges to the true eigenvector after some number of iteration. Since the used dataset is too small to trigger converging, the subspace iteration is executed repeatedly on the same covariance matrix until the resulting eigenvectors stabilize. A single iteration step per incoming samples as in the actual streaming data use case would produce extremely high deltas in the output. When the subspace iteration stabilizes after 200 iterations the resulting deltas are:  
 \begin{table}[htbp]
 \centering
 \begin{tabular}{lrrr}
@@ -79,9 +72,7 @@ $u_{2,y}$ & -0.735178656 & -0.735179 & $3.44 \times 10^{-7}$ \\
 \caption{Comparison of the converged principal components (eigenvectors), sign-corrected due to the inherent sign ambiguity of eigenvectors.}
 \label{tab:eigenvector_comparison}
 \end{table}
-
-Finally, the adjusted data is projected onto the converged principal component with the largest eigenvalue. When comparing the results from the tutorial to the implementation the following are the results. 
-
+Finally, the mean adjusted data is projected onto the converged principal component with the largest eigenvalue. When comparing the results from the tutorial to the implementation the following are the results. 
 \begin{table}[htbp]
 \centering
 \begin{tabular}{rrrr}
@@ -103,3 +94,6 @@ Reference $x$ / $y$ & Own Implementation $x$ / $y$ & Abs. Diff. $x$ & Abs. Diff.
 \caption{Comparison of the projected principal component scores between the reference and the proposed implementation, sign-corrected due to the inherent sign ambiguity of the underlying eigenvectors.}
 \label{tab:scores_comparison}
 \end{table}
+
+// dazu schreiben ,dass man im grunde keine genaueren werte mit longs bekommen kann zwischen 10 hoch -5 und 10hoch -9 ist aktzeptabel
+//vis datensätzte und https://github.com/OliverHennhoefer/awesome-ts-anomaly-detection-datasets

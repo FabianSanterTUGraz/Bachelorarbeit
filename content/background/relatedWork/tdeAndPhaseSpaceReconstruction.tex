@@ -1,2 +1,5 @@
 \subsection{Phase Space Reconstruction and time delay embedding}
-As summarized by \textcite{Tan_2023}, the embedding theorem guarantees that, 
+As elaborated by \textcite{Tan_2023} Takens' embedding theorem guarantees that a time delay embedding with dynamics $\phi$ defined in a space of sufficiently high dimension $R^d$ constructed from scalar observed time series is generically diffeomorphic to the full state space dynamics of the underlying dynamical system." In practice when working with vibration signals however since real measurements are not infinite, noise free or precise this guarantee does not hold. This means that the selection of time lag $\tau$ and in the embedding dimension d (in the paper denoted as $m$)  has a considerable effect on the resulting quality of the reconstructed attractor. The practical sensitivity is explored further in section \ref{section:influenceOfParameters}.\\
+The paper defines a so called embedding window, $\tau_w = d\tau$ which is the product of embedding dimension and time lag has been introduced as a more relevant quantity to optimize than $\tau$ and $d$ individually.
+\cite{Tan_2023} proposes to choose this to parameters as followed: for sufficiently large embedding dimension, it
+could be argued that a selection of $\tau_w$ may be simplified to an appropriate selection of $\tau$ .

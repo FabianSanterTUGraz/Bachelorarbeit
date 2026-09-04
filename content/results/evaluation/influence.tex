@@ -1,7 +1,7 @@
 \subsection{Influence of parameter choices on the resulting fingerprint}
 \label{section:influenceOfParameters}
-To test the influence of the parameters embedding dimension $d$, window size $W$ and time delay $\tau$ the incremental principal component analysis algorithm is applied on dataset 01 and benchmarked across a set of different parameter values.
-The goal is to find out how these parameters influence the resulting visualization and to identify which settings produce plots with maximal information content and clear visual distinction between normal and distorted vibration patterns. According to \textcite{rakuschek2025visual} the clearest elliptical structure is produced when $(d - 1) * \tau$ is chosen to be approximately the same as the period duration. The dominant frequency in the dataset is 44.54 Hz and with that the optimal period length is 12 values. 
+To test the influence of the parameters embedding dimension $d$, window size $W$ and time delay $\tau$ the incremental principal component analysis algorithm is applied on dataset-01 and benchmarked across a set of different parameter values.
+The goal is to find out how these parameters influence the resulting visualization and to identify which settings produce plots with maximal information content and clear visual distinction between normal and distorted vibration patterns. According to \textcite{rakuschek2025visual} the clearest elliptical structure is produced when $(d - 1) * \tau$ is chosen to be approximately equal to the period duration. The dominant frequency in the dataset is 44.54 Hz resulting in an optimal period length of approximately 12 samples. 
 \begin{figure}[htbp]
     \centering
     \begin{adjustwidth}{-2cm}{-2cm}  % je 2cm links und rechts in den Rand hinein
@@ -11,22 +11,25 @@ The goal is to find out how these parameters influence the resulting visualizati
     \caption{Influence of the parameter d on the fingerprint plot.}
     \label{fig:expA-dimension}
 \end{figure}
-The plotting on different dimension $d$ shows that indeed the best value has to produce a 1 times to 2 times the optimal value of the optimal period length. 
+The figure \ref{fig:expA-dimension} illustrates how the embedding dimension $d$ influences the fingerprint plot. For $d = 3$ the core region is more diffuse and less sharply defined compared to larger values of $d$. A higher dimension values of $d = 13$ and $d = 25$ produces a plot with a compact core whose shape remain stable indicating that the method is relatively robust to small changes in the dimension however values as high as $d = 65$ , the plot shows clear structural degradation, the color gradient becomes asymmetric and the outer region becomes unclear. This confirms that the guideline $(d - 1)*\tau$ is in fact correct and should be chosen roughly on the order of one period length of the dominant signal component.\\
 \begin{figure}[htbp]
     \centering
     \begin{adjustwidth}{-2cm}{-2cm}  % je 2cm links und rechts in den Rand hinein
         \centering
         \includegraphics[width=\linewidth]{figures/differentWindowsResult.png}
     \end{adjustwidth}
-    \caption{Influence of the parameter d on the fingerprint plot.}
-    \label{fig:expA-dimension}
+    \caption{Influence of the parameter w on the fingerprint plot.}
+    \label{fig:expA-windowSize}
 \end{figure}
+The second parameter,the window size $w$, is compared in Figure \ref{fig:expA-windowSize} by plotting the most recent window of the input sequence in each case respectively. For a relatively small window of $w = 200$ the resulting point cloud is sparse and largely unstructured, with no clear core region. As the window size increases and more in data points are included, $w = 2000$ appears to be a sweet spot where the shape becomes clearly visible without adding to much information. Increasing the window to $w = 8000$ does not noticeably improve the shape, it hardly increases the point density without adding information that was not already the shape of window size 2000. A general rule which is also found in literature can be established: the window size should be at least 20-50 times the size of the embedding dimension in order to produce a clearly defined shape.
 \begin{figure}[htbp]
     \centering
     \begin{adjustwidth}{-2cm}{-2cm}  % je 2cm links und rechts in den Rand hinein
         \centering
         \includegraphics[width=\linewidth]{figures/differentTauResults.png}
     \end{adjustwidth}
-    \caption{Influence of the parameter d on the fingerprint plot.}
-    \label{fig:expA-dimension}
+    \caption{Influence of the parameter $\tau$ on the fingerprint plot.}
+    \label{fig:expA-tau}
 \end{figure}
+Figure \ref{fig:expA-tau} shows the influence of $\tau$ using the previously established parameters  $d = 13 ,w=2000$. In opposition to the parameter $d$ where changes led to clear degradation of the structural integrity, changing $\tau$ changes the shape of the fingerprint rather than its compact form. The core region becomes stretched along one axis as $\tau$ increases while remaining well defined even for larger values. \\
+In conclusion the comparison demonstrates that all three parameters embedding dimension, window size and tau have a measurable influence on the fingerprint plots each affecting it in its own unique way. The embedding dimension parameter was revealed to be the most sensitive parameter leading to structural degradation when chosen to large. The window size revealed to be  the parameter which controls how much of the underlying structure becomes visible at all with some threshold beyond adding samples increases point density but does not contribute no further information at all. The time delay embedding parameter $\tau$ mainly changed the shape of the fingerprint without producing loss of structural integrity,even at spans $(d-1)\cdot\tau$ larger than those that caused degradation in the $d$-experiment. The result of this finding is that the total embedding span is not on its own a sufficient predictor for fingerprint quality since both underlying parameters seem to affect the construction trough different mechanisms. Based on the analysis the thesis came to a conclusion that ,$d=13,w=2000,\tau=1$ seem to be one of the best settings in this specific scenario as they produce a compact well defined fingerprint at a efficient window size. A full factorial exploration of how these three parameters interact is left open for future work.  
