@@ -1,6 +1,6 @@
 \subsection{Operations}
-To ensure real-time responsiveness in principle component analysis each sub-step in the         algorithm must operate incrementally rather than recalculate values.
-These operations are: running mean and covariance matrix, centering incoming vectors and updating feature directions.
+To ensure real-time responsiveness in principle component analysis each sub-step in the algorithm must work incrementally rather than recalculate values.
+These operations to optimize are: running mean and covariance matrix, centering incoming vectors and updating feature directions.
 \input{content/chapter4/incrementalPca/operations/mean}
 \input{content/chapter4/incrementalPca/operations/covarianceMatrix}
 \input{content/chapter4/incrementalPca/operations/subspaceIteration}
