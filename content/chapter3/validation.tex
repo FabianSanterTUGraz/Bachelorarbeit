@@ -1,6 +1,15 @@
-\section{Data validation}
-The dataset used for validating the feasibility of the proposed approach and evaluating the overall functionality of the implementation is the \textit{Electric Motor Vibrations Dataset} provided by the SOON: Social Network of Machines CHIST-ERA Project (\cite{DATA_SET}). The dataset consists of 30 individual column separated values (CSV) files containing vibration measurements collected from two different electrical motors operating under different conditions. The appendix \ref{app:dataset_description} exactly documents each test condition in which the motors where tested in this thesis these different tests will be refereed by their individual ids.
-Each dataset contains a timestamp value followed by acceleration measurements along the three spatial axes ($x$, $y$, and $z$). The timestamp column represents the time order of the measurements, while the remaining columns describe the recorded vibration signals of the sensor in the respective axes.
-Before the data can be used for anomaly detection, two essential preprocessing and validation steps are required: First, the timestamps must be validated to ensure a consistent sampling interval across the dataset. Second, the three-dimensional acceleration vectors must be transformed into a single representative signal for easier processing.
+\section{Used dataset}
+The datasets used for validating the feasibility of the proposed approach and the overall functionality of the implementation are evaluated on the \textit{IMS Bearing Dataset}, provided by the Center for Intelligent Maintenance Systems (IMS), University of Cincinnati. (\cite{DATASET}).
+Each set describes a test-to-failure experiment in which four bearings were mounted on the same shaft. Each file captures 1-second snapshots of the vibration signals, recorded in an fixed time interval of every 10 minutes. The sampling rate was set to 20 kHz with each file containing 20480 individual data points. \\
+The exact test setup is not as relevant for this thesis what matters is that the bearings where run to failure which in this context means that they where run beyond thier designed lifetime of 100 million revolutions. For the sake of completeness the detailed test setup is fully described in \ref{app:dataset_description}.\\ \\
+
+The choice of the dataset is crucial when working this algorithm. The signal has to start in a healthy state to provide a visual reference, the signal has to be periodic and it has to capture the fault over an extended period of time. A previously considered dataset had to be discarded because it did not meet these requirements: its signal started faulty and captured the a really small time interval with sudden changes in periodicity rather than slow degradation. \\
+Using a dedicated dataset is crucial when working with this algorithm one of the most important requirement it captures a periodic sample and has to start at a healthy state to have a visual starting point and has to capture the fault over a extended period of time. The algorithm was also run on periodic signals which start at a faulty state and captures abrupt periodic changes which completely distorts the visual comparison. \\
+
+Dataset 2 and 3 have the same structure: on each bearing a single accelerometer is mounted and each column corresponds to exactly one bearing. In dataset 1 however each bearing is equipped with 
+two accelerometers which measures the vibrations on the x and y axis. This structure has to be considered when running the algorithm on the datasets. Additional not all bearings failed by the end of the experiment. To observe degradation over time bearing 3 and 4 in set 1, bearing 1 in set 2 or bearing 3 in set 3 have to be considered. All other bearings can be used as a healty reference. \\ \\
+
+To simulate the requirement of streaming data each set is concentrated into one continous file resulting in 44,154,880 (Set 1), 20,152,320 (Set 2), and 91,095,040 (Set 3) samples per channel.
+
+
 \input{content/chapter3/dataValidation/validatingTimestamps}
-\input{content/chapter3/dataValidation/combiningVectors}

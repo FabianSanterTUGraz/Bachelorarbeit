@@ -1,31 +1,30 @@
 \subsection{Sampling Interval ($\Delta$t)}
-Consistent sampling intervals are important factors in time series data. Large time jumps between consecutive individual measurements can introduce artificial anomalies. Therefore the dataset was validated by calculating the time differences between consecutive timestamps. 
+Consistent sampling intervals are important factors in time series data. Large time jumps between consecutive consecutive measurements can introduce artificial anomalies. Therefore the dataset was validated by calculating the time differences between consecutive timestamps. 
 The interval $\Delta t$ was calculated as : \\
-\begin{center}
-$\Delta t_n = t_n - t_{n-1}$ \\
-\end{center}   
-Where $\Delta t_n$ is the time  difference between the current  and previous measurement. 
-With Python's NumPy min and max functions, the minimum and maximum $\Delta t$ were computed for each dataset. The complete evaluation results are detailed in \ref{app:appendix2}. Inspection identified anomalies characterized by unexpected negative or excessively large values. After excluding these specific files  
-(Files: 05, 13, 14, and 16) and running again the algorithm, the resulting statistical values improved significantly, as show in \ref{table:statistics}.\\
-\begin{table}[!h]
- \centering
- \begin{tabular}{|c|c|}
- \hline
- Total number of intervals & 2,975,473 \\ 
- \hline
- Mean $\Delta t$ & 1,906.94 $\mu$s \\ 
- \hline
- Standard deviation & 38.03 $\mu$s \\ 
- \hline
- Median & 1,912.0 $\mu$s \\
- \hline
- Minimum & 1,660.0 $\mu$s \\
- \hline
- Maximum & 2,032.0 $\mu$s \\
- \hline
- \end{tabular}
- \caption{Statistics of sampling intervals after filtering rounded to the second decimal}
- \label{table:statistics}
+\begin{equation}
+    \Delta t_n = t_n - t_{n-1}, \qquad n = 2, \dots, N,
+\end{equation}
+Where $t_n$ is the time stamp of the file at time $n$ and $N$ is the number of files of a test run.
+Using Python's NumPy min and max functions, the minimum and maximum $\Delta t$ were computed for each dataset. 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|r|r|r|}
+        \hline
+        & Test~1 & Test~2 & Test~3 \\
+        \hline
+        Number of files                 & 2,156   & 984    & 6,324  \\
+        Data points per file            & 20,480  & 20,480 & 20,480 \\
+        Duration [days]                 & 34.5    & 6.8    & 44.7   \\
+        Median $\Delta t$ [min]         & 10.00   & 10.00  & 10.00  \\
+        Mean $\Delta t$ [min]           & 23.04   & 10.00  & 10.18  \\
+        Standard deviation [min]        & 264.32  & 0.00   & 8.45   \\
+        Minimum $\Delta t$ [min]        & 0.22    & 10.00  & 1.03   \\
+        Maximum $\Delta t$ [min]        & 8905.55 & 10.00  & 451.95 \\
+        \hline
+    \end{tabular}
+    \caption{Statistics of the intervals $\Delta t$ between consecutive data files for the
+    three test runs of the dataset.}
+    \label{tab:samplingIntervals}
 \end{table}
-\\
-By analyzing the results, a clear improvement can be observed, the difference between the minimum, maximum, and the global mean are very small. Additionally, the standard deviation has improved a lot, which indicates highly consistent sampling. These results imply that the dataset was successful cleaned and can be used for further benchmarking and testing.
+All files contain 20,480 data points which means that the sampling within a file is consistent in all three test runs. The duration of the experiments varies with the longest test running for nearly 45 days and the shortest under 7 days. The median interval over all test runs is 10 minutes. In test 2 each interval is equal leading to an standard deviation of zero. In test 1 and 3 the mean and standard deviation are dominated by a few longer pauses in the experiment (caused by the resumption of the experiment in the next working day) the longest lasting about 6 days in test 1 and 7.5 hours in test 3. 
+Considering that each file is processed as one window these irregularities do not affect the calculation of a single fingerprint if there are gaps in the dataset means that no fingerprint exists for that period of time.
